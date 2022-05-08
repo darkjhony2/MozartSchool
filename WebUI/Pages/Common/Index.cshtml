@@ -1,0 +1,70 @@
+﻿@page
+@using System.Reflection
+@using WebUI.Utils
+@model WebUI.Pages.Common.IndexModel
+
+@{
+    ViewData["Title"] = Model.View.DisplayName;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.View.AllowCreate)
+{
+    <p>
+        <a asp-page="Create"><i class="fa-solid fa-circle-plus fa-2xl"></i></a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            @foreach (PropertyInfo prop in Model.EModel[0].GetType().GetProperties())
+            {
+                <th>
+                    @ReflectionExtensions.GetPropertyDisplayName(prop)
+                </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.EModel)
+        {
+            <tr>
+                @foreach (PropertyInfo prop in Model.EModel[0].GetType().GetProperties())
+                {
+                    <td>
+                        @prop.GetValue(item, null)
+                    </td>
+                }
+                <td>
+                    @if (Model.View.AllowUpdate)
+                    {
+                        var prop = Model.EModel[0].GetType().GetProperties().Where(x => x.Name == "Id").First();
+                        <a asp-page="./Edit" asp-route-view="@Model.View.Name" asp-route-id="@prop.GetValue(item, null)"><i class="fa-solid fa-pen-to-square fa-xl"></i></a>
+                        @Html.Raw("|")
+                    }
+
+                    @if (Model.View.AllowDetails)
+                    {
+                        var prop = Model.EModel[0].GetType().GetProperties().Where(x => x.Name == "Id").First();
+                        <a asp-page="./Details" asp-route-view="@Model.View.Name" asp-route-id="@prop.GetValue(item, null)" style="color:green"><i class="fa-solid fa-circle-info fa-xl"></i></a> 
+                        @Html.Raw("|")
+
+                    }
+
+                    @if (Model.View.AllowDelete)
+                    {
+                        var prop = Model.EModel[0].GetType().GetProperties().Where(x => x.Name == "Id").First();
+                        <a asp-page="./Delete" asp-route-view="@Model.View.Name" asp-route-id="@prop.GetValue(item, null)" style="color:red"><i class="fa-solid fa-trash fa-xl"></i></a>
+                        @Html.Raw("|")
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

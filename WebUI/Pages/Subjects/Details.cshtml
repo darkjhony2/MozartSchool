@@ -1,0 +1,25 @@
+﻿@page
+@model WebUI.Pages.Subjects.DetailsModel
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Materias</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Model.Id">Editar</a> |
+    <a asp-page="./Index">Regresar al listado</a>
+</div>

@@ -1,0 +1,27 @@
+﻿@page
+@model WebUI.Pages.Subjects.DeleteModel
+
+@{
+    ViewData["Title"] = "Eliminar";
+}
+
+<h1>Eliminar</h1>
+
+<h3>¿Estas seguro de eliminar esto?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Model.Name)
+        </dd>    
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Model.Id" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-page="./Index">Volver al listado</a>
+    </form>
+</div>

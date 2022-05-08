@@ -1,0 +1,36 @@
+﻿@page
+@model WebUI.Pages.Subjects.IndexModel
+
+@{
+    ViewData["Title"] = "Materias";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-page="Create"><i class="fa-solid fa-circle-plus fa-2xl"></i></a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ESubject[0].Name)
+            </th>     
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ESubject) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>           
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square fa-sm"></i></a> |
+                <a asp-page="./Details" asp-route-id="@item.Id" style="color:green"><i class="fa-solid fa-circle-info fa-sm"></i></a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id" style="color:red"><i class="fa-solid fa-trash fa-sm"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
