@@ -4,28 +4,26 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ColegioMozart.Infrastructure.Persistence.Configurations;
 
-public class EAcademicLevelConfiguration : AuditableEntityMap<EAcademicLevel, int>
+public class EAcademicScaleConfiguration : AuditableEntityMap<EAcademicScale, int>
 {
 
-    public override void Configure(EntityTypeBuilder<EAcademicLevel> builder)
+    public override void Configure(EntityTypeBuilder<EAcademicScale> builder)
     {
         base.Configure(builder);
 
-        builder.ToTable("academic_levels", options =>
+        builder.ToTable("academic_scales", options =>
         {
-
             options.IsTemporal();
         });
 
 
-        builder.HasIndex(u => u.Level)
+        builder.HasIndex(u => u.Name)
         .IsUnique();
 
-        builder.Property(x => x.AcademicScaleId).IsRequired();
-
-        builder.Property(x => x.Level)
+        builder.Property(x => x.Name)
             .HasMaxLength(100)
             .IsRequired();
 
     }
+
 }

@@ -45,22 +45,37 @@ public static class ApplicationDbContextSeed
             await context.SaveChangesAsync();
         }
 
+        var inicial = new EAcademicScale() { Name = "Inicial" };
+        var primaria = new EAcademicScale() { Name = "Primaria" };
+        var secundaria = new EAcademicScale() { Name = "Secundaria" };
+
+        if (!context.AcademicScales.Any())
+        {
+
+
+            context.AcademicScales.Add(inicial);
+            context.AcademicScales.Add(primaria);
+            context.AcademicScales.Add(secundaria);
+
+            await context.SaveChangesAsync();
+        }
+
         if (!context.AcademicLevels.Any())
         {
-            int id = await AddAcademicLevel(context, "Inicial (3 años)", null);
-            id = await AddAcademicLevel(context, "Inicial (4 años)", id);
-            id = await AddAcademicLevel(context, "Inicial (5 años)", id);
-            id = await AddAcademicLevel(context, "1° Primaria", id);
-            id = await AddAcademicLevel(context, "2° Primaria", id);
-            id = await AddAcademicLevel(context, "3° Primaria", id);
-            id = await AddAcademicLevel(context, "4° Primaria", id);
-            id = await AddAcademicLevel(context, "5° Primaria", id);
-            id = await AddAcademicLevel(context, "6° Primaria", id);
-            id = await AddAcademicLevel(context, "1° Secundaria", id);
-            id = await AddAcademicLevel(context, "2° Secundaria", id);
-            id = await AddAcademicLevel(context, "3° Secundaria", id);
-            id = await AddAcademicLevel(context, "4° Secundaria", id);
-            id = await AddAcademicLevel(context, "5° Secundaria", id);
+            int id = await AddAcademicLevel(context, "Inicial (3 años)", null, inicial);
+            id = await AddAcademicLevel(context, "Inicial (4 años)", id, inicial);
+            id = await AddAcademicLevel(context, "Inicial (5 años)", id, inicial);
+            id = await AddAcademicLevel(context, "1° Primaria", id, primaria);
+            id = await AddAcademicLevel(context, "2° Primaria", id, primaria);
+            id = await AddAcademicLevel(context, "3° Primaria", id, primaria);
+            id = await AddAcademicLevel(context, "4° Primaria", id, primaria);
+            id = await AddAcademicLevel(context, "5° Primaria", id, primaria);
+            id = await AddAcademicLevel(context, "6° Primaria", id, primaria);
+            id = await AddAcademicLevel(context, "1° Secundaria", id, secundaria);
+            id = await AddAcademicLevel(context, "2° Secundaria", id, secundaria);
+            id = await AddAcademicLevel(context, "3° Secundaria", id, secundaria);
+            id = await AddAcademicLevel(context, "4° Secundaria", id, secundaria);
+            id = await AddAcademicLevel(context, "5° Secundaria", id, secundaria);
         }
 
         if (!context.Shifts.Any())
@@ -263,9 +278,9 @@ public static class ApplicationDbContextSeed
 
     }
 
-    private static async Task<int> AddAcademicLevel(ApplicationDbContext context, string level, int? previousId)
+    private static async Task<int> AddAcademicLevel(ApplicationDbContext context, string level, int? previousId, EAcademicScale academicScale)
     {
-        var academicLevel = new EAcademicLevel() { Level = level, PreviousAcademicLevelId = previousId };
+        var academicLevel = new EAcademicLevel() { Level = level, PreviousAcademicLevelId = previousId, AcademicScale = academicScale };
         context.AcademicLevels.Add(academicLevel);
         await context.SaveChangesAsync();
 
