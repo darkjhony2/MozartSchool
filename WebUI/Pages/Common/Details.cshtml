@@ -1,4 +1,35 @@
 ﻿@page
+@using System.Reflection
+@using WebUI.Utils
 @model WebUI.Pages.Common.DetailsModel
 @{
 }
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<div>
+    <h4>@Model.View.DisplayName</h4>
+    <hr />
+    @foreach (PropertyInfo prop in Model.EModel.GetType().GetProperties())
+    {
+        <dl class="row">
+
+            <dt class="col-sm-3">
+                @ReflectionExtensions.GetPropertyDisplayName(prop)
+            </dt>
+            <dd class="col-sm-9">
+                @prop.GetValue(Model.EModel, null)
+            </dd>
+        </dl>
+    }
+
+</div>
+<div class="mt-2">
+
+    <a asp-page="./Index" asp-route-view="@Model.View.Name">Regresar al listado</a>
+</div>

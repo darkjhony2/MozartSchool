@@ -1,0 +1,19 @@
+﻿@page
+@model WebUI.Pages.Common.CreateModel
+
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<h3>Registrar - @Model.View.DisplayName</h3>
+<hr />
+
+
+
+<div class="mt-2">
+    <a asp-page="Index" asp-route-view="@Model.View.Name">Volver al listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

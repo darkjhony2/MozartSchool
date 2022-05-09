@@ -24,6 +24,10 @@ public class EEntity
 
     public string EntityDtoFullName { get; set; }
 
+    public string? CreateEntityFullName { get; set; }
+
+    public string? EditEntityFullName { get; set; }
+
     public List<EEntityFields> EntityFields { get; set; }
 }
 

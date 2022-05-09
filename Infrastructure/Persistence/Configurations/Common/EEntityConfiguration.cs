@@ -16,5 +16,11 @@ public class EEntityConfiguration : IEntityTypeConfiguration<EEntity>
             .HasMany(x=> x.EntityFields)
             .WithOne(e => e.Entity);
 
+        builder.Property(e => e.CreateEntityFullName)
+            .HasMaxLength(300);
+
+
+        builder.Property(e => e.EditEntityFullName)
+            .HasMaxLength(300);
     }
 }
