@@ -15,6 +15,8 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+           
+
 
             @if (Model.ModelType != null)
             {
@@ -27,6 +29,8 @@
                     </div>
                 }
             }
+
+             @Html.ValidationMessage("CustomError", new { @class = "text-danger" })
 
             <div class="form-group mt-2">
                 <input type="submit" value="Registrar" class="btn btn-primary" />
