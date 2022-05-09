@@ -15,9 +15,6 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-           
-
-
             @if (Model.ModelType != null)
             {
                 foreach (PropertyInfo property in Model.EModel.GetType().GetProperties())
@@ -28,13 +25,21 @@
                         @Html.ValidationMessage("EModel." + property.Name, null, new { @class = "text-danger" })
                     </div>
                 }
+
+                @Html.ValidationMessage("CustomError", new { @class = "text-danger" })
+
+                <div class="form-group mt-2">
+                    <input type="submit" value="Registrar" class="btn btn-primary" />
+                </div>
+            }
+            else
+            {
+                <div class="form-group mt-2">
+                    <h2> Esta funcionalidad no se encuentra implementada. </h2>
+                </div>
             }
 
-             @Html.ValidationMessage("CustomError", new { @class = "text-danger" })
 
-            <div class="form-group mt-2">
-                <input type="submit" value="Registrar" class="btn btn-primary" />
-            </div>
 
             <input type="hidden" name="ViewName" value="@Model.ViewName" />
         </form>

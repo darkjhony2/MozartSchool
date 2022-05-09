@@ -34,8 +34,11 @@ namespace WebUI.Pages.Common
                 ModelType = ReflectionExtensions.GetTypeFromAllAssemblies(View.Entity.CreateEntityFullName);
             }
 
-
-            EModel = Activator.CreateInstance(ModelType);
+            if (ModelType != null)
+            {
+                EModel = Activator.CreateInstance(ModelType);
+            }
+                
 
             return Page();
         }
