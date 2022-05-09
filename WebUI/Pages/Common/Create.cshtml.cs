@@ -1,8 +1,10 @@
 using ColegioMozart.Application.Common.CommonCRUD.Commands;
 using ColegioMozart.Application.Common.CommonCRUD.Queries;
+using ColegioMozart.Application.Common.Exceptions;
 using ColegioMozart.Application.Shifts;
 using ColegioMozart.Domain.Common;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebUI.Pages.Shared;
 using WebUI.Utils;
@@ -47,18 +49,33 @@ namespace WebUI.Pages.Common
                 ModelType = ReflectionExtensions.GetTypeFromAllAssemblies(View.Entity.CreateEntityFullName);
             }
 
-            var requestData = Request.Form.Where(x=> x.Key.StartsWith("EModel")).ToDictionary(x => x.Key.Replace("EModel.", string.Empty), x => x.Value.ToString());
+            var requestData = Request.Form.Where(x => x.Key.StartsWith("EModel")).ToDictionary(x => x.Key.Replace("EModel.", string.Empty), x => x.Value.ToString());
 
-            
+            EModel = Activator.CreateInstance(ModelType);
 
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            try
+            {
+                await Mediator.Send(new CreateEntityCommand() { Parameters = requestData, View = View });
+            }
+            catch (EntityAlreadyExistException ex)
+            {
+                foreach (var prop in ex.Fields)
+                {
+                    ModelState.TryAddModelError("EModel." + prop, ex.Message);
+                }
 
-            await Mediator.Send(new CreateEntityCommand() { Parameters = requestData, View = View });
+                if (ex.Fields.Count == 0)
+                {
+                    ModelState.AddModelError("CustomError", ex.Message);
+                }
 
+                return Page();
+            }
 
             return RedirectToPage("./Index", new { view = ViewName });
         }
