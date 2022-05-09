@@ -1,4 +1,6 @@
 ﻿@page
+@using System.Reflection
+@using WebUI.Utils
 @model WebUI.Pages.Common.CreateModel
 
 @{
@@ -8,12 +10,39 @@
 <h3>Registrar - @Model.View.DisplayName</h3>
 <hr />
 
+<div class="row">
+    <div class="col-md-5">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+
+            @if (Model.ModelType != null)
+            {
+                foreach (PropertyInfo property in Model.EModel.GetType().GetProperties())
+                {
+                    <div class="form-group mb-2">
+                        @Html.Label("EModel." + property.Name, ReflectionExtensions.GetPropertyDisplayName(property), new { @class = "control-label" })
+                        @Html.Editor("EModel." + property.Name)
+                        @Html.ValidationMessage("EModel." + property.Name, null, new { @class = "text-danger" })
+                    </div>
+                }
+            }
+
+            <div class="form-group mt-2">
+                <input type="submit" value="Registrar" class="btn btn-primary" />
+            </div>
+
+            <input type="hidden" name="ViewName" value="@Model.ViewName" />
+        </form>
+    </div>
+</div>
 
 <div class="mt-2">
     <a asp-page="Index" asp-route-view="@Model.View.Name">Volver al listado</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

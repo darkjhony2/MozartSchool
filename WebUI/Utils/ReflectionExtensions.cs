@@ -37,9 +37,25 @@ public static class ReflectionExtensions
             {
                 return displayAttr.Name;
             }
-        }    
+        }
         return prop.Name;
     }
 
+    public static Type GetTypeFromAllAssemblies(string typeName)
+    {
+        foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName.StartsWith("ColegioMozart")))
+        {
+            if (a.FullName.StartsWith("System"))
+                continue;
+
+            foreach (Type t in a.GetTypes())
+            {
+                if (t.FullName.Equals(typeName))
+                    return t;
+            }
+        }
+
+        return null;
+    }
 
 }
