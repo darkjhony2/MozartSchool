@@ -59,7 +59,7 @@ public class GetEntityByIdRequestHandler : IRequestHandler<GetEntityByIdQuery, T
     {
         var includeProps = new List<string>();
 
-        var childProps = type.GetProperties().Where(x => !x.PropertyType.Namespace.StartsWith("System"))
+        var childProps = type.GetProperties().Where(x => !x.PropertyType.Namespace.StartsWith("System") && x.PropertyType != type)
             .ToList();
 
         includeProps.AddRange(childProps.Select(x => x.Name));
