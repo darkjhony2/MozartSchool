@@ -153,6 +153,7 @@ public static class ApplicationDbContextSeed
             {
                 EntityFullName = "ColegioMozart.Domain.Entities.EShift",
                 EntityDtoFullName = "ColegioMozart.Application.Shifts.ShiftDTO",
+                CreateEntityFullName = "ColegioMozart.Application.Shifts.CreateShiftDTO",
                 EntityFields = new List<EEntityFields>
                 {
                     new EEntityFields()

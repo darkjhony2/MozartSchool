@@ -27,6 +27,7 @@ public class GetEntitiesQueryHandler : IRequestHandler<GetEntitiesQuery, GetEnti
     {
        var view = await _context
             .Views
+            .AsNoTracking()
             .Where(x => x.Name == request.View)
             .Include(x=> x.Entity)
             .FirstOrDefaultAsync();

@@ -1,5 +1,6 @@
 ﻿using ColegioMozart.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace ColegioMozart.Application.Common.Interfaces;
 
@@ -15,6 +16,12 @@ public interface IApplicationDbContext
     DbSet<EEntity> Entities { get; }
     DbSet<EView> Views { get; }
     IQueryable GetQueryable(Type type);
+
+    EntityEntry<TEntity> Entry<TEntity>(TEntity entity)
+            where TEntity : class;
+
+    EntityEntry<TEntity> Attach<TEntity>(TEntity entity)
+            where TEntity : class;
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

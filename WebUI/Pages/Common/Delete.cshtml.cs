@@ -1,3 +1,4 @@
+using ColegioMozart.Application.Common.CommonCRUD.Commands;
 using ColegioMozart.Application.Common.CommonCRUD.Queries;
 using ColegioMozart.Application.Common.Exceptions;
 using ColegioMozart.Domain.Common;
@@ -6,8 +7,9 @@ using WebUI.Pages.Shared;
 
 namespace WebUI.Pages.Common
 {
-    public class DetailsModel : PageModelBase
+    public class DeleteModel : PageModelBase
     {
+        [BindProperty]
         public object EModel { get; set; }
 
         public EView View { get; set; }
@@ -31,8 +33,26 @@ namespace WebUI.Pages.Common
                 return NotFound();
             }
 
-
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(string? id, string view)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                await Mediator.Send(new DeleteEntityCommand() { Id = id, View = view });
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+
+            return RedirectToPage("./Index", new { view = view });
         }
     }
 }

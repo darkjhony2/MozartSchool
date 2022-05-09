@@ -20,8 +20,6 @@ namespace WebUI.Pages.Common
 
             EModel = response.Models;
             View = response.View;
-
-
         }
     }
 }

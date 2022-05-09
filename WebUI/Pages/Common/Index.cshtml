@@ -12,20 +12,24 @@
 @if (Model.View.AllowCreate)
 {
     <p>
-        <a asp-page="Create"><i class="fa-solid fa-circle-plus fa-2xl"></i></a>
+        <a asp-page="Create" asp-route-view="@Model.View.Name"><i class="fa-solid fa-circle-plus fa-2xl"></i></a>
     </p>
 }
 
 <table class="table">
     <thead>
         <tr>
-            @foreach (PropertyInfo prop in Model.EModel[0].GetType().GetProperties())
+            @if (Model.EModel.Count > 0)
             {
-                <th>
-                    @ReflectionExtensions.GetPropertyDisplayName(prop)
-                </th>
+                foreach (PropertyInfo prop in Model.EModel[0].GetType().GetProperties())
+                {
+                    <th>
+                        @ReflectionExtensions.GetPropertyDisplayName(prop)
+                    </th>
+                }
+                <th></th>
             }
-            <th></th>
+
         </tr>
     </thead>
     <tbody>
@@ -49,7 +53,7 @@
                     @if (Model.View.AllowDetails)
                     {
                         var prop = Model.EModel[0].GetType().GetProperties().Where(x => x.Name == "Id").First();
-                        <a asp-page="./Details" asp-route-view="@Model.View.Name" asp-route-id="@prop.GetValue(item, null)" style="color:green"><i class="fa-solid fa-circle-info fa-xl"></i></a> 
+                        <a asp-page="./Details" asp-route-view="@Model.View.Name" asp-route-id="@prop.GetValue(item, null)" style="color:green"><i class="fa-solid fa-circle-info fa-xl"></i></a>
                         @Html.Raw("|")
 
                     }

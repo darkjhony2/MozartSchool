@@ -85,7 +85,7 @@ public class Startup
         app.UseStaticFiles();
         if (!env.IsDevelopment())
         {
-            app.UseSpaStaticFiles();
+            //app.UseSpaStaticFiles();
         }
 
         app.UseSwaggerUi3(settings =>
