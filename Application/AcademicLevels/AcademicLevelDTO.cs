@@ -11,6 +11,9 @@ public class AcademicLevelDTO : IMapFrom<EAcademicLevel>
     [Display(Name = "Id")]
     public int Id { get; set; }
 
+    [Display(Name = "Nivel")]
+    public string Scale { get; set; }
+
     [Display(Name = "Grado")]
     public string Level { get; set; }
 
@@ -22,6 +25,7 @@ public class AcademicLevelDTO : IMapFrom<EAcademicLevel>
         profile.CreateMap<EAcademicLevel, AcademicLevelDTO>()
             .ForMember(d => d.Level, opt => opt.MapFrom(s => s.Level))
             .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
+            .ForMember(d => d.Scale, opt => opt.MapFrom(s => s.AcademicScale.Name))
             .ForMember(d => d.PreviousAcademicLevel, opt => opt.MapFrom(s => s.PreviousAcademicLevel.Level));
     }
 

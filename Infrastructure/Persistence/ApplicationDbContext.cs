@@ -31,6 +31,7 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<ESubject> Subjects => Set<ESubject>();
     public DbSet<EShift> Shifts => Set<EShift>();
     public DbSet<EAcademicLevel> AcademicLevels => Set<EAcademicLevel>();
+    public DbSet<EAcademicScale> AcademicScales => Set<EAcademicScale>();
     public DbSet<ESection> Sections => Set<ESection>();
     public DbSet<EAcademicPeriod> AcademicPeriods => Set<EAcademicPeriod>();
 
