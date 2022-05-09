@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ColegioMozart.Application.Shifts;
 
-public class CreateShiftDTO 
+public class CreateShiftDTO : IMapTo<EShift>
 {
     [Display(Name = "Nombre")]
     public string Name { get; set; }
