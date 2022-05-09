@@ -7,5 +7,6 @@ namespace ColegioMozart.Application.Shifts;
 public class CreateShiftDTO : IMapTo<EShift>
 {
     [Display(Name = "Nombre")]
+    [Required]
     public string Name { get; set; }
 }
