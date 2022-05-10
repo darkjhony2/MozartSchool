@@ -195,6 +195,7 @@ public static class ApplicationDbContextSeed
             var entity3 = new EEntity()
             {
                 EntityFullName = "ColegioMozart.Domain.Entities.ESection",
+                CreateEntityFullName = "ColegioMozart.Application.Sections.CreateSectionDTO",
                 EntityDtoFullName = "ColegioMozart.Application.Sections.SectionDTO",
                 EntityFields = new List<EEntityFields>
                 {
@@ -222,6 +223,7 @@ public static class ApplicationDbContextSeed
             var entity4 = new EEntity()
             {
                 EntityFullName = "ColegioMozart.Domain.Entities.EAcademicPeriod",
+                CreateEntityFullName = "ColegioMozart.Application.AcademicPeriods.CreateAcademicPeriodDTO",
                 EntityDtoFullName = "ColegioMozart.Application.AcademicPeriods.AcademicPeriodDTO",
                 EntityFields = new List<EEntityFields>
                 {

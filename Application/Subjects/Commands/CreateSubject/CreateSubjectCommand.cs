@@ -9,6 +9,7 @@ namespace ColegioMozart.Application.Subjects.Commands.CreateSubject;
 public class CreateSubjectCommand : IRequest<Guid>
 {
     [Required]
+    [RegularExpression(@"^[a-zA-Z]+[ a-zA-Z-_]+[0-9]*$", ErrorMessage = "Solo se permiten letras y números")]
     [Display(Name = "Nombre")]
     public string Name { get; set; }
 }
