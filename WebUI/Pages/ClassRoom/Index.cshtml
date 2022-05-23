@@ -1,0 +1,60 @@
+﻿@page
+@model WebUI.Pages.ClassRoom.IndexModel
+@{
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassRooms[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassRooms[0].Tutor)
+            </th>  
+            <th>
+                @Html.DisplayNameFor(model => model.ClassRooms[0].Level)
+            </th>  
+            <th>
+                @Html.DisplayNameFor(model => model.ClassRooms[0].Section)
+            </th>  
+            <th>
+                @Html.DisplayNameFor(model => model.ClassRooms[0].Shift)
+            </th>  
+            <th>
+                @Html.DisplayNameFor(model => model.ClassRooms[0].Year)
+            </th>  
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ClassRooms) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tutor.FullName)
+            </td>        
+            <td>
+                @Html.DisplayFor(modelItem => item.Level.Level)
+            </td>        
+            <td>
+                @Html.DisplayFor(modelItem => item.Section.Name)
+            </td>        
+            <td>
+                @Html.DisplayFor(modelItem => item.Shift.Name)
+            </td>        
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>        
+
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square fa-sm"></i></a> |
+                <a asp-page="./Details" asp-route-id="@item.Id" style="color:green"><i class="fa-solid fa-circle-info fa-sm"></i></a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id" style="color:red"><i class="fa-solid fa-trash fa-sm"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

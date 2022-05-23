@@ -104,6 +104,7 @@ public static class ApplicationDbContextSeed
         {
             context.Teachers.Add(new ETeacher()
             {
+                Id = new Guid("AD566FD6-4D18-4C46-0C5F-08DA355325DF"),
                 Email = "imteacher@mozart.edu.pe",
                 Phone = "946368628",
                 Person = new EPerson()
@@ -275,6 +276,12 @@ public static class ApplicationDbContextSeed
             context.Views.Add(new EView() { Name = "Teachers", DisplayName = "Docentes", AllowDelete = false, AllowCreate = true, AllowUpdate = true, AllowDetails = true, Entity = entity5 });
 
 
+            await context.SaveChangesAsync();
+        }
+
+        if (!context.ClassRooms.Any())
+        {
+            context.ClassRooms.Add(new EClassRoom() { Year = 2022, LevelId = 1, ShiftId = 1, TutorId = new Guid("AD566FD6-4D18-4C46-0C5F-08DA355325DF"), SectionId = 1 });
             await context.SaveChangesAsync();
         }
 
