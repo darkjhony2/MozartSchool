@@ -24,6 +24,16 @@
         </dl>
     }
 
+    @if (!string.IsNullOrEmpty(Model.DeleteMessageError))
+    {
+        <dl class="row">
+            <dd class="col-sm-12 text-danger">
+                @Model.DeleteMessageError
+            </dd>
+        </dl>
+    }
+
+
     <form method="post">
         <input type="hidden" name="Id" value="@Model.EModel.GetType().GetProperties().Where(x=> x.Name == "Id").First().GetValue(Model.EModel, null)" />
         <input type="hidden" name="view" value="@Model.View.Name" />

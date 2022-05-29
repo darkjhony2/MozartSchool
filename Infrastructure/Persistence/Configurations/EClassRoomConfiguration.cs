@@ -23,17 +23,34 @@ namespace ColegioMozart.Infrastructure.Persistence.Configurations
             builder.Property(x => x.Year)
                 .IsRequired();
             
+
             builder.Property(x => x.LevelId)
                 .IsRequired();
+
+            builder.HasOne(e => e.Level)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(x => x.ShiftId)
                 .IsRequired();
 
+            builder.HasOne(e => e.Shift)
+               .WithMany()
+               .OnDelete(DeleteBehavior.Restrict);
+
             builder.Property(x => x.TutorId)
                 .IsRequired();
 
+            builder.HasOne(e => e.Tutor)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Property(x => x.SectionId)
                 .IsRequired();
+
+            builder.HasOne(e => e.Section)
+               .WithMany()
+               .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

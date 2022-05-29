@@ -14,6 +14,8 @@ namespace WebUI.Pages.Common
 
         public EView View { get; set; }
 
+        public string DeleteMessageError { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string? id, string view)
         {
             if (id == null)
@@ -50,6 +52,15 @@ namespace WebUI.Pages.Common
             catch (NotFoundException)
             {
                 return NotFound();
+            }
+            catch (DeleteFailureException ex)
+            {
+                var response = await Mediator.Send(new GetEntityByIdQuery() { Id = id, View = view });
+                EModel = response.Item1;
+                View = response.Item2;
+
+                DeleteMessageError = ex.Message;
+                return Page();
             }
 
             return RedirectToPage("./Index", new { view = view });

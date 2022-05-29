@@ -27,6 +27,7 @@ public static class ApplicationDbContextSeed
 
     public static async Task SeedSampleDataAsync(ApplicationDbContext context)
     {
+
         if (!context.Subjects.Any())
         {
             context.Subjects.Add(new ESubject() { Name = "Lenguaje" });
@@ -275,14 +276,21 @@ public static class ApplicationDbContextSeed
 
             context.Views.Add(new EView() { Name = "Teachers", DisplayName = "Docentes", AllowDelete = false, AllowCreate = true, AllowUpdate = true, AllowDetails = true, Entity = entity5 });
 
-
             await context.SaveChangesAsync();
         }
 
         if (!context.ClassRooms.Any())
         {
-            context.ClassRooms.Add(new EClassRoom() { Year = 2022, LevelId = 1, ShiftId = 1, TutorId = new Guid("AD566FD6-4D18-4C46-0C5F-08DA355325DF"), SectionId = 1 });
+            context.ClassRooms.Add(new EClassRoom()
+            {
+                Year = 2022,
+                LevelId = context.AcademicLevels.Where(x => x.Level == "Inicial (3 años)").First().Id,
+                ShiftId = context.Shifts.Where(x => x.Name == "Turno Mañana").First().Id,
+                TutorId = context.Teachers.First().Id,
+                SectionId = context.Sections.Where(x => x.Name == "A").First().Id
+            });
             await context.SaveChangesAsync();
+
         }
 
     }

@@ -51,11 +51,19 @@ public class DeleteEntityCommandHandler : IRequestHandler<DeleteEntityCommand>
         {
             _context.Attach(entity);
         }
-
-        _context.Entry(entity).State = EntityState.Deleted;
-
-        await _context.SaveChangesAsync(cancellationToken);
-
+        try
+        {
+            _context.Entry(entity).State = EntityState.Deleted;
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateException dbEx)
+        {
+            if (dbEx.InnerException.Message.Contains("FK_"))
+            {
+                throw new DeleteFailureException("No se pudo eliminar el registro porque tiene registros asociados");
+            }
+            throw;
+        }
         return await Task.FromResult(Unit.Value);
     }
 
