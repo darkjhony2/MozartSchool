@@ -36,7 +36,7 @@ public class Startup
         }).AddJsonOptions(j =>
         {
             j.JsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
-
+            j.JsonSerializerOptions.Converters.Add(new DateOnlyConverter());
         });
         
         services.AddEndpointsApiExplorer();

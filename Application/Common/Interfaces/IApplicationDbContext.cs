@@ -7,6 +7,7 @@ namespace ColegioMozart.Application.Common.Interfaces;
 public interface IApplicationDbContext
 {
     DbSet<ESubject> Subjects { get; }
+    DbSet<EAcademicPeriod> AcademicPeriods { get; }
     DbSet<ETeacher> Teachers { get; }
     DbSet<EPerson> Persons { get; }
     DbSet<EClassRoom> ClassRooms { get; }
