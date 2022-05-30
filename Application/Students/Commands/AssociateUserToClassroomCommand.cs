@@ -29,7 +29,7 @@ public class AssociateUserToClassroomCommandHandler : IRequestHandler<AssociateU
 
     public async Task<Unit> Handle(AssociateUserToClassroomCommand request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Associating user to classroom");
+        _logger.LogInformation("Associating student {} to classroom {}", request.StudentId, request.ClassroomId);
 
         var classroom = await _context
             .ClassRooms

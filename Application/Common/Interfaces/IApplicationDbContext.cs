@@ -10,6 +10,7 @@ public interface IApplicationDbContext
     DbSet<ETeacher> Teachers { get; }
     DbSet<EPerson> Persons { get; }
     DbSet<EClassRoom> ClassRooms { get; }
+    DbSet<EClassSchedule> ClassSchedules { get; }
     DbSet<EAcademicLevel> AcademicLevels { get; }
     DbSet<EAcademicScale> AcademicScales { get; }
     DbSet<EShift> Shifts { get; }

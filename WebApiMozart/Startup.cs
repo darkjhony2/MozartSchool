@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using WebApiMozart.Filters;
 using WebApiMozart.Services;
+using WebApiMozart.Utils;
 
 namespace WebApiMozart;
 
@@ -28,7 +29,16 @@ public class Startup
         });
 
         services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddControllers(options => options.Filters.Add<ApiExceptionFilterAttribute>());
+        services.AddControllers(options =>
+        {
+            options.Filters.Add<ApiExceptionFilterAttribute>();
+
+        }).AddJsonOptions(j =>
+        {
+            j.JsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
+
+        });
+        
         services.AddEndpointsApiExplorer();
         services.AddHealthChecks();
 

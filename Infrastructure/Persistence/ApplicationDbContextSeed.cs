@@ -350,7 +350,7 @@ public static class ApplicationDbContextSeed
                 },
                 ClassRoomId = classroomId
             });
-            
+
             context.Students.Add(new EStudent()
             {
                 CurrentAcademicLevelId = context.AcademicLevels.Where(x => x.Level == "Inicial (3 años)").First().Id,
@@ -389,6 +389,85 @@ public static class ApplicationDbContextSeed
 
             await context.SaveChangesAsync();
         }
+
+        if (!context.ClassSchedules.Any())
+        {
+            var classroomId = context.ClassRooms.Where(
+                    x => x.Year == 2022
+                    && x.Level.Level == "Inicial (3 años)"
+                    && x.Shift.Name == "Turno Mañana"
+                    && x.Section.Name == "A"
+                 )
+                .First().Id;
+
+            var teacherId = context.Teachers.Where(x => x.Person.DocumentNumber == "74715976").First().Id;
+
+            var taller = new ESubject()
+            {
+                Name = "Taller"
+            };
+
+            var desarrolloEDA = new ESubject()
+            {
+                Name = "Desarrollo de la EdA"
+            };
+
+            context.Subjects.Add(taller);
+            context.Subjects.Add(desarrolloEDA);
+
+            context.ClassSchedules.Add(new EClassSchedule()
+            {
+                ClassRoomId = classroomId,
+                DayOfWeek = DayOfWeek.Monday,
+                StartTime = new TimeOnly(8, 30, 0),
+                EndTime = new TimeOnly(11, 0, 0),
+                Subject = taller,
+                TeacherId = teacherId,
+            });
+
+            context.ClassSchedules.Add(new EClassSchedule()
+            {
+                ClassRoomId = classroomId,
+                DayOfWeek = DayOfWeek.Tuesday,
+                StartTime = new TimeOnly(8, 30, 0),
+                EndTime = new TimeOnly(11, 0, 0),
+                Subject = desarrolloEDA,
+                TeacherId = teacherId,
+            });
+
+            context.ClassSchedules.Add(new EClassSchedule()
+            {
+                ClassRoomId = classroomId,
+                DayOfWeek = DayOfWeek.Wednesday,
+                StartTime = new TimeOnly(8, 30, 0),
+                EndTime = new TimeOnly(11, 0, 0),
+                Subject = taller,
+                TeacherId = teacherId,
+            });
+
+            context.ClassSchedules.Add(new EClassSchedule()
+            {
+                ClassRoomId = classroomId,
+                DayOfWeek = DayOfWeek.Thursday,
+                StartTime = new TimeOnly(8, 30, 0),
+                EndTime = new TimeOnly(11, 0, 0),
+                Subject = desarrolloEDA,
+                TeacherId = teacherId,
+            });
+
+            context.ClassSchedules.Add(new EClassSchedule()
+            {
+                ClassRoomId = classroomId,
+                DayOfWeek = DayOfWeek.Friday,
+                StartTime = new TimeOnly(8, 30, 0),
+                EndTime = new TimeOnly(11, 0, 0),
+                Subject = taller,
+                TeacherId = teacherId
+            });
+
+            await context.SaveChangesAsync();
+        }
+
 
     }
 

@@ -48,6 +48,8 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
     public DbSet<EStudent> Students => Set<EStudent>();
 
+    public DbSet<EClassSchedule> ClassSchedules => Set<EClassSchedule>();
+
     public IQueryable GetQueryable(Type type)
     {
         var method = typeof(DbContext).GetMethods().Where(x => x.Name == "Set").FirstOrDefault();
