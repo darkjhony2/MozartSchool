@@ -16,6 +16,7 @@ public interface IApplicationDbContext
     DbSet<EDocumentType> DocumentTypes { get; }
     DbSet<EGender> Genders { get; }
     DbSet<ESection> Sections { get; }
+    DbSet<EStudent> Students { get; }
 
 
     DbSet<EEntityFields> EntityFields { get; }

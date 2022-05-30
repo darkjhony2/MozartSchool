@@ -1,15 +1,4 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using ColegioMozart.Application.ClassRoom.dtos;
-using ColegioMozart.Application.Common.Interfaces;
-using ColegioMozart.Domain.Entities;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ColegioMozart.Application.ClassRoom.dtos;
 
 namespace ColegioMozart.Application.ClassRoom.Queries
 {

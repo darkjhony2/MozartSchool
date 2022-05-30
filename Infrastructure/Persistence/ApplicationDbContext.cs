@@ -46,6 +46,8 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
     public DbSet<EPerson> Persons => Set<EPerson>();
 
+    public DbSet<EStudent> Students => Set<EStudent>();
+
     public IQueryable GetQueryable(Type type)
     {
         var method = typeof(DbContext).GetMethods().Where(x => x.Name == "Set").FirstOrDefault();

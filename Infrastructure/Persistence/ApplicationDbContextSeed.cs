@@ -131,6 +131,27 @@ public static class ApplicationDbContextSeed
             await context.SaveChangesAsync();
         }
 
+        if (!context.Students.Any())
+        {
+            context.Students.Add(new EStudent()
+            {
+                Id = new Guid("AD566FD6-4D18-4C46-0C5F-08DA355325DC"),
+                CurrentAcademicLevelId = context.AcademicLevels.Where(x => x.Level == "1° Secundaria").FirstOrDefault().Id,
+                Person = new EPerson()
+                {
+                    DateOfBirth = new DateTime(1990, 12, 10),
+                    DocumentNumber = "12345678",
+                    DocumentTypeId = 1,
+                    Name = "Hans",
+                    LastName = "Haro",
+                    MothersLastName = "Haro",
+                    GenderId = 1
+                }
+            });
+
+            await context.SaveChangesAsync();
+        }
+
 
         if (!context.Views.Any())
         {
