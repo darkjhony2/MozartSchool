@@ -1,4 +1,5 @@
-﻿using ColegioMozart.Application.ClassRoom.Queries;
+﻿using ColegioMozart.Application.ClassRoom.Commands;
+using ColegioMozart.Application.ClassRoom.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApiMozart.Controllers
@@ -27,6 +28,18 @@ namespace WebApiMozart.Controllers
         public async Task<IActionResult> Get(Guid id)
         {
             var data = await Mediator.Send(new GetClassroomByIdQuery() { Id = id });
+            return Ok(data);
+        }
+
+        /// <summary>
+        /// Crea un salón de clases para el presente año
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] CreateClassroomCommand command)
+        {
+            var data = await Mediator.Send(command);
             return Ok(data);
         }
 
