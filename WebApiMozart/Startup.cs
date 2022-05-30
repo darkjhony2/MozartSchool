@@ -36,12 +36,17 @@ public class Startup
 
         services.AddCors(c =>
         {
-            c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            c.AddPolicy("AllowOrigin", options =>
+            {
+                options.AllowAnyOrigin();
+                options.AllowAnyHeader();
+                options.AllowAnyMethod();
+            });
         });
 
         services.AddApplication();
 
-        services.AddInfrastructure(Configuration);      
+        services.AddInfrastructure(Configuration);
 
     }
 
@@ -60,7 +65,12 @@ public class Startup
             app.UseHsts();
         }
 
-        app.UseCors(options => options.AllowAnyOrigin());
+        app.UseCors(options =>
+        {
+            options.AllowAnyOrigin();
+            options.AllowAnyHeader();
+            options.AllowAnyMethod();
+        });
 
         app.UseRouting();
 
@@ -75,6 +85,6 @@ public class Startup
                 pattern: "{controller}/{action}");
         });
 
-    }    
+    }
 
 }
