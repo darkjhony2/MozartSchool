@@ -1,4 +1,5 @@
-﻿using ColegioMozart.Application.Students.Queries;
+﻿using ColegioMozart.Application.Students.Commands;
+using ColegioMozart.Application.Students.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApiMozart.Controllers
@@ -16,6 +17,17 @@ namespace WebApiMozart.Controllers
         public async Task<IActionResult> GetByCurrentLevel(int id)
         {
             var data = await Mediator.Send(new GetStudentsByAcademicLevelQuery() { AcademicLevelId = id });
+            return Ok(data);
+        }
+
+        /// <summary>
+        /// Registra un nuevo estudiante
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost()]
+        public async Task<IActionResult> RegisterStudent([FromRoute] CreateStudentCommand cmd)
+        {
+            var data = await Mediator.Send(cmd);
             return Ok(data);
         }
 

@@ -16,8 +16,7 @@ namespace WebApiMozart.Controllers
         {
             var data = await Mediator.Send(new GetAllStudentsByClassroomId() { ClassroomId = classroomId });
             return Ok(data);
-        }
-
+        }     
 
         /// <summary>
         /// Asigna a un estudiante un salón de clases
