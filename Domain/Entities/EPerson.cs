@@ -6,7 +6,7 @@ public class EPerson : AuditableEntity<Guid>
     public string MothersLastName { get; set; }
     public string LastName { get; set; }
 
-    public DateOnly DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
 
     public virtual EDocumentType DocumentType { get; set; }
 

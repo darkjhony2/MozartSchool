@@ -21,8 +21,8 @@ public class EPersonConfiguration : AuditableEntityMap<EPerson, Guid>
         builder.HasIndex(u => new { u.DocumentTypeId, u.DocumentNumber })
         .IsUnique();
 
-        builder.Property(x => x.DateOfBirth)
-         .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+        /*builder.Property(x => x.DateOfBirth)
+         .HasConversion<DateOnlyConverter, DateOnlyComparer>();*/
 
         builder.Property(x => x.DocumentNumber)
             .HasMaxLength(20)

@@ -41,6 +41,10 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<EEntityFields> EntityFields => Set<EEntityFields>();
     public DbSet<EEntity> Entities => Set<EEntity>();
     public DbSet<EView> Views => Set<EView>();
+    public DbSet<EDocumentType> DocumentTypes => Set<EDocumentType>();
+    public DbSet<EGender> Genders => Set<EGender>();
+
+    public DbSet<EPerson> Persons => Set<EPerson>();
 
     public IQueryable GetQueryable(Type type)
     {

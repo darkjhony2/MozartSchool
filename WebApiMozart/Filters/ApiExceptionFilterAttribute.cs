@@ -1,6 +1,7 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Linq;
 
 namespace WebApiMozart.Filters;
 
@@ -50,7 +51,8 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 
         var details = new ValidationProblemDetails(exception.Errors)
         {
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+            Detail = String.Join(Environment.NewLine, exception.Errors.Select(x => string.Join(Environment.NewLine, x.Value)).ToArray())
         };
 
         context.Result = new BadRequestObjectResult(details);
@@ -111,7 +113,8 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         {
             Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
             Title = "Error ocurred register entity",
-            Detail = exception.Message
+            Detail = exception.Message,
+            Extensions = { { "Fields", exception.Fields } }
         };
 
         context.Result = new ObjectResult(details)

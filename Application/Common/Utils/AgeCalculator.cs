@@ -3,7 +3,7 @@
 public static class AgeCalculator
 {
 
-    public static int GetAge(this DateOnly birthdate)
+    public static int GetAge(this DateTime birthdate)
     {
         var today = DateTime.Today;
 

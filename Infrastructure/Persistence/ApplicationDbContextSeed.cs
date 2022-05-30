@@ -110,7 +110,7 @@ public static class ApplicationDbContextSeed
                 Phone = "946368628",
                 Person = new EPerson()
                 {
-                    DateOfBirth = new DateOnly(1990, 12, 10),
+                    DateOfBirth = new DateTime(1990, 12, 10),
                     DocumentNumber = "74715976",
                     DocumentType = new EDocumentType()
                     {
