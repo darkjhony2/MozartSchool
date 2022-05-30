@@ -26,5 +26,9 @@ public class ETeacherConfiguration : AuditableEntityMap<ETeacher, Guid>
         builder.Property(x => x.PersonId)
             .IsRequired();
 
+        builder.HasOne(e => e.Person)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
     }
 }

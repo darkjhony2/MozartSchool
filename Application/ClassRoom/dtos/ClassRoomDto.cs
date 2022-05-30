@@ -4,12 +4,7 @@ using ColegioMozart.Application.Sections;
 using ColegioMozart.Application.Shifts;
 using ColegioMozart.Application.Teachers;
 using ColegioMozart.Domain.Entities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ColegioMozart.Application.ClassRoom.dtos
 {

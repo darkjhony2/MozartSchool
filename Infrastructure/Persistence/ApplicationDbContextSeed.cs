@@ -131,27 +131,6 @@ public static class ApplicationDbContextSeed
             await context.SaveChangesAsync();
         }
 
-        if (!context.Students.Any())
-        {
-            context.Students.Add(new EStudent()
-            {
-                Id = new Guid("AD566FD6-4D18-4C46-0C5F-08DA355325DC"),
-                CurrentAcademicLevelId = context.AcademicLevels.Where(x => x.Level == "1° Secundaria").FirstOrDefault().Id,
-                Person = new EPerson()
-                {
-                    DateOfBirth = new DateTime(1990, 12, 10),
-                    DocumentNumber = "12345678",
-                    DocumentTypeId = 1,
-                    Name = "Hans",
-                    LastName = "Haro",
-                    MothersLastName = "Haro",
-                    GenderId = 1
-                }
-            });
-
-            await context.SaveChangesAsync();
-        }
-
 
         if (!context.Views.Any())
         {
@@ -312,6 +291,103 @@ public static class ApplicationDbContextSeed
             });
             await context.SaveChangesAsync();
 
+        }
+
+        if (!context.Students.Any())
+        {
+            var classroomId = context.ClassRooms.Where(
+                    x => x.Year == 2022
+                    && x.Level.Level == "Inicial (3 años)"
+                    && x.Shift.Name == "Turno Mañana"
+                    && x.Section.Name == "A"
+                 )
+                .First().Id;
+
+            context.Students.Add(new EStudent()
+            {
+                CurrentAcademicLevelId = context.AcademicLevels.Where(x => x.Level == "Inicial (3 años)").First().Id,
+                Person = new EPerson()
+                {
+                    DateOfBirth = new DateTime(1999, 12, 10),
+                    DocumentNumber = "12345678",
+                    DocumentTypeId = 1,
+                    Name = "Hans",
+                    LastName = "Haro",
+                    MothersLastName = "Antezana",
+                    GenderId = 1
+                },
+                ClassRoomId = classroomId
+            });
+
+            context.Students.Add(new EStudent()
+            {
+                CurrentAcademicLevelId = context.AcademicLevels.Where(x => x.Level == "Inicial (3 años)").First().Id,
+                Person = new EPerson()
+                {
+                    DateOfBirth = new DateTime(1999, 12, 10),
+                    DocumentNumber = "12345679",
+                    DocumentTypeId = 1,
+                    Name = "Johnny",
+                    LastName = "Quezada",
+                    MothersLastName = "Perez",
+                    GenderId = 1
+                },
+                ClassRoomId = classroomId
+            });
+
+            context.Students.Add(new EStudent()
+            {
+                CurrentAcademicLevelId = context.AcademicLevels.Where(x => x.Level == "Inicial (3 años)").First().Id,
+                Person = new EPerson()
+                {
+                    DateOfBirth = new DateTime(1999, 12, 10),
+                    DocumentNumber = "12345680",
+                    DocumentTypeId = 1,
+                    Name = "Bryan",
+                    LastName = "Chilque",
+                    MothersLastName = "Chilque",
+                    GenderId = 1
+                },
+                ClassRoomId = classroomId
+            });
+            
+            context.Students.Add(new EStudent()
+            {
+                CurrentAcademicLevelId = context.AcademicLevels.Where(x => x.Level == "Inicial (3 años)").First().Id,
+                Person = new EPerson()
+                {
+                    DateOfBirth = new DateTime(1999, 12, 10),
+                    DocumentNumber = "12345681",
+                    DocumentTypeId = 1,
+                    Name = "Luis",
+                    LastName = "Calderon",
+                    MothersLastName = "Alvarado",
+                    GenderId = 1
+                },
+                ClassRoomId = classroomId
+            });
+
+            context.Students.Add(new EStudent()
+            {
+                CurrentAcademicLevelId = context.AcademicLevels.Where(x => x.Level == "Inicial (3 años)").First().Id,
+                Person = new EPerson()
+                {
+                    DateOfBirth = new DateTime(1999, 12, 10),
+                    DocumentNumber = "12345682",
+                    DocumentTypeId = 1,
+                    Name = "Daniela",
+                    LastName = "Chia",
+                    MothersLastName = "Chia",
+                    Gender = new EGender()
+                    {
+                        Name = "Femenino"
+                    }
+                },
+                ClassRoomId = classroomId
+            });
+
+
+            await context.SaveChangesAsync();
         }
 
     }

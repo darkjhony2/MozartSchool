@@ -16,7 +16,9 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
             {
               { typeof(ValidationException), HandleValidationException },
              { typeof(NotFoundException), HandleNotFoundException },
-            { typeof(EntityAlreadyExistException), HandleEntityAlreadyExistException }
+            { typeof(EntityAlreadyExistException), HandleEntityAlreadyExistException },
+            { typeof(AlreadyAssociatedException), HandleAlreadyAssociatedException }
+
             };
     }
 
@@ -120,6 +122,25 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         context.Result = new ObjectResult(details)
         {
             StatusCode = StatusCodes.Status500InternalServerError
+        };
+
+        context.ExceptionHandled = true;
+    }
+
+    private void HandleAlreadyAssociatedException(ExceptionContext context)
+    {
+        var exception = (AlreadyAssociatedException)context.Exception;
+
+        var details = new ProblemDetails()
+        {
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+            Title = "Error ocurred",
+            Detail = exception.Message,
+        };
+
+        context.Result = new ObjectResult(details)
+        {
+            StatusCode = StatusCodes.Status412PreconditionFailed
         };
 
         context.ExceptionHandled = true;

@@ -4,6 +4,7 @@ using ColegioMozart.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ColegioMozart.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220530184004_students-to-classrooms")]
+    partial class studentstoclassrooms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -668,9 +670,6 @@ namespace ColegioMozart.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
 
-                    b.Property<Guid?>("ClassRoomId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
@@ -680,6 +679,9 @@ namespace ColegioMozart.Infrastructure.Migrations
 
                     b.Property<int>("CurrentAcademicLevelId")
                         .HasColumnType("int");
+
+                    b.Property<Guid?>("EClassRoomId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
@@ -703,9 +705,9 @@ namespace ColegioMozart.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassRoomId");
-
                     b.HasIndex("CurrentAcademicLevelId");
+
+                    b.HasIndex("EClassRoomId");
 
                     b.HasIndex("PersonId");
 
@@ -988,7 +990,7 @@ namespace ColegioMozart.Infrastructure.Migrations
 
                     b.HasIndex("Use");
 
-                    b.ToTable("Keys", (string)null);
+                    b.ToTable("Keys");
                 });
 
             modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.PersistedGrant", b =>
@@ -1278,24 +1280,22 @@ namespace ColegioMozart.Infrastructure.Migrations
 
             modelBuilder.Entity("ColegioMozart.Domain.Entities.EStudent", b =>
                 {
-                    b.HasOne("ColegioMozart.Domain.Entities.EClassRoom", "ClassRoom")
-                        .WithMany("Students")
-                        .HasForeignKey("ClassRoomId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("ColegioMozart.Domain.Entities.EAcademicLevel", "CurrentAcademicLevel")
                         .WithMany()
                         .HasForeignKey("CurrentAcademicLevelId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ColegioMozart.Domain.Entities.EClassRoom", null)
+                        .WithMany("Students")
+                        .HasForeignKey("EClassRoomId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("ColegioMozart.Domain.Entities.EPerson", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ClassRoom");
 
                     b.Navigation("CurrentAcademicLevel");
 

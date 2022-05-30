@@ -24,6 +24,10 @@ public class EStudentConfiguration : AuditableEntityMap<EStudent, Guid>
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
 
+        builder.HasOne(e => e.Person)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
     }
 
 }

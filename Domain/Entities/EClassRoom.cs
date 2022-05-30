@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ColegioMozart.Domain.Entities
+﻿namespace ColegioMozart.Domain.Entities
 {
     public class EClassRoom : AuditableEntity<Guid>
     {
@@ -17,5 +11,7 @@ namespace ColegioMozart.Domain.Entities
         public Guid TutorId { get; set; }
         public virtual ESection Section { get; set; }
         public int SectionId { get; set; }
+        
+        public IList<EStudent> Students { get; set; }
     }
 }

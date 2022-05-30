@@ -51,6 +51,10 @@ namespace ColegioMozart.Infrastructure.Persistence.Configurations
             builder.HasOne(e => e.Section)
                .WithMany()
                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(e => e.Students)
+                .WithOne(e => e.ClassRoom)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
