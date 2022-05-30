@@ -9,6 +9,7 @@ public interface IApplicationDbContext
     DbSet<ESubject> Subjects { get; }
     DbSet<EClassRoom> ClassRooms { get; }
     DbSet<EAcademicLevel> AcademicLevels { get; }
+    DbSet<EAcademicScale> AcademicScales { get; }
     DbSet<EShift> Shifts { get; }
     DbSet<ESection> Sections { get; }
 

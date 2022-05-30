@@ -2,6 +2,7 @@
 using ColegioMozart.Application.Common.Interfaces;
 using ColegioMozart.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 using WebApiMozart.Filters;
 using WebApiMozart.Services;
 
@@ -20,7 +21,11 @@ public class Startup
     {
         services.AddHttpContextAccessor();
 
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(options =>
+        {
+            string path = Assembly.GetEntryAssembly()!.GetName().Name + ".xml";
+            SwaggerGenOptionsExtensions.IncludeXmlComments(options, Path.Combine(AppContext.BaseDirectory, path), false);
+        });
 
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddControllers(options => options.Filters.Add<ApiExceptionFilterAttribute>());
