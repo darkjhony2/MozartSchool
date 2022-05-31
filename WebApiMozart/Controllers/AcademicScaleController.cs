@@ -1,20 +1,22 @@
-﻿using ColegioMozart.Application.DocumentTypes.Queries;
+﻿using ColegioMozart.Application.AcademicScale.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApiMozart.Controllers
 {
-    public class DocumentTypeController : RestApiControllerBase
+    public class AcademicScaleController : RestApiControllerBase
     {
-
         /// <summary>
-        /// Listar los tipos de documento
+        /// Listar todas las escalas académicas
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var data = await Mediator.Send(new GetAllDocumentTypesQuery());
+            var data = await Mediator.Send(new GetAcademicScalesQuery());
             return Ok(data);
         }
+
+        
+
     }
 }

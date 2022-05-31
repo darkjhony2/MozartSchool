@@ -5,6 +5,10 @@ namespace WebApiMozart.Controllers
 {
     public class GenderController : RestApiControllerBase
     {
+        /// <summary>
+        /// Listar los géneros
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {

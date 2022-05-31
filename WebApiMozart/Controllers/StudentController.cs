@@ -6,6 +6,10 @@ namespace WebApiMozart.Controllers
 {
     public class StudentController : RestApiControllerBase
     {
+        /// <summary>
+        /// Listar todos los estudiantes de la institución educactiva
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -13,6 +17,12 @@ namespace WebApiMozart.Controllers
             return Ok(data);
         }
 
+
+        /// <summary>
+        /// Listar los estudiantes por el grado (nivel académico)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("academicLevel/{id}")]
         public async Task<IActionResult> GetByCurrentLevel(int id)
         {

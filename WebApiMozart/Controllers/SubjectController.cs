@@ -10,6 +10,10 @@ namespace WebApiMozart.Controllers
     public class SubjectController : RestApiControllerBase
     {
 
+        /// <summary>
+        /// Lista todos los cursos 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -17,6 +21,12 @@ namespace WebApiMozart.Controllers
             return Ok(subjects);
         }
 
+
+        /// <summary>
+        /// Busca un curso por su Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -24,6 +34,11 @@ namespace WebApiMozart.Controllers
             return Ok(subject);
         }
 
+        /// <summary>
+        /// Registra un curso
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateSubjectCommand subject)
         {
@@ -31,7 +46,12 @@ namespace WebApiMozart.Controllers
             return Ok(subject);
         }
 
-
+        /// <summary>
+        /// Actualiza los datos de un curso
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="subject"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] ESubjectDTO subject)
         {
@@ -39,6 +59,11 @@ namespace WebApiMozart.Controllers
             return Ok(subject);
         }
 
+        /// <summary>
+        /// Elimina un curso por su Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
