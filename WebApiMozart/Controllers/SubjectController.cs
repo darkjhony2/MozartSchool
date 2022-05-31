@@ -1,8 +1,10 @@
-﻿using ColegioMozart.Application.Subjects.Commands.CreateSubject;
+﻿using ColegioMozart.Application.Common.Models;
+using ColegioMozart.Application.Subjects.Commands.CreateSubject;
 using ColegioMozart.Application.Subjects.Commands.DeleteSubject;
 using ColegioMozart.Application.Subjects.Commands.UpdateSubject;
 using ColegioMozart.Application.Subjects.Queries;
 using ColegioMozart.Application.Subjects.Queries.GetSubjectById;
+using ColegioMozart.Application.Subjects.Queries.GetSubjectsByFilters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApiMozart.Controllers
@@ -18,6 +20,17 @@ namespace WebApiMozart.Controllers
         public async Task<IActionResult> Get()
         {
             var subjects = await Mediator.Send(new GetSubjectsQuery());
+            return Ok(subjects);
+        }
+
+        /// <summary>
+        /// Lista todos los cursos con campos de filtros
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Filter")]
+        public async Task<IActionResult> GetByFilters([FromHeader] int pageNumber, [FromHeader] int pageSize, [FromQuery] SubjectFilterDTO subject)
+        {
+            var subjects = await Mediator.Send(new GetSubjectsByFiltersQuery { SubjectFilter = subject , Page = new PageModelFilterDTO(pageNumber, pageSize) });
             return Ok(subjects);
         }
 
