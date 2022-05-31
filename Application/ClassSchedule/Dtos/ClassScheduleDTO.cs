@@ -2,13 +2,18 @@
 using ColegioMozart.Application.Subjects.Queries;
 using ColegioMozart.Domain.Entities;
 using System.Globalization;
+using System.Text.Json.Serialization;
 
 namespace ColegioMozart.Application.ClassSchedule.Dtos;
 
 public class ClassScheduleDTO : IMapFrom<EClassSchedule>
 {
     public Guid Id { get; set; }
+
+    [JsonConverter(typeof(TimeOnlyFormmatter))]
     public TimeOnly StartTime { get; set; }
+
+    [JsonConverter(typeof(TimeOnlyFormmatter))]
     public TimeOnly EndTime { get; set; }
 
     public string DayOfWeek { get; set; }

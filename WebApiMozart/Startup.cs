@@ -1,5 +1,6 @@
 ﻿using ColegioMozart.Application;
 using ColegioMozart.Application.Common.Interfaces;
+using ColegioMozart.Application.Common.Utils;
 using ColegioMozart.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
@@ -37,6 +38,9 @@ public class Startup
         {
             j.JsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
             j.JsonSerializerOptions.Converters.Add(new DateOnlyConverter());
+
+
+            j.JsonSerializerOptions.Converters.Add(new TimeOnlyFormmatter());
         });
         
         services.AddEndpointsApiExplorer();
