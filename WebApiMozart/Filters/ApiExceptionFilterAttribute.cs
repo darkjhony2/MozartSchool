@@ -1,6 +1,7 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace WebApiMozart.Filters;
@@ -17,7 +18,8 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
               { typeof(ValidationException), HandleValidationException },
              { typeof(NotFoundException), HandleNotFoundException },
             { typeof(EntityAlreadyExistException), HandleEntityAlreadyExistException },
-            { typeof(AlreadyAssociatedException), HandleAlreadyAssociatedException }
+            { typeof(AlreadyAssociatedException), HandleAlreadyAssociatedException },
+            { typeof(DbUpdateException), HandleDbUpdateException }
 
             };
     }
@@ -141,6 +143,32 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         context.Result = new ObjectResult(details)
         {
             StatusCode = StatusCodes.Status412PreconditionFailed
+        };
+
+        context.ExceptionHandled = true;
+    }
+
+    private void HandleDbUpdateException(ExceptionContext context)
+    {
+        var exception = (DbUpdateException)context.Exception;
+
+        string message = exception.Message;
+
+        if (exception.InnerException.Message.Contains("FK_"))
+        {
+            message = "No se pudo eliminar el registro porque tiene registros asociados";
+        }
+
+        var details = new ProblemDetails()
+        {
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+            Title = "Error ocurred",
+            Detail = message,
+        };
+
+        context.Result = new ObjectResult(details)
+        {
+            StatusCode = StatusCodes.Status500InternalServerError
         };
 
         context.ExceptionHandled = true;
