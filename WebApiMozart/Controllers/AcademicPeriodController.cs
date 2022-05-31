@@ -31,4 +31,17 @@ public class AcademicPeriodController : RestApiControllerBase
         await Mediator.Send(new CreateAcademicPeriodCommand() { Resource = dto });
         return Ok(dto);
     }
+
+    /// <summary>
+    /// Elimina un periodo academico
+    /// </summary>
+    /// <returns></returns>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    {
+        await Mediator.Send(new DeleteAcademicPeriodCommand() { Id = id });
+        return Ok();
+    }
+
+
 }
