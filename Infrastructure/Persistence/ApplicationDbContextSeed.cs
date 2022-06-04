@@ -95,9 +95,9 @@ public static class ApplicationDbContextSeed
 
         if (!context.AcademicPeriods.Any())
         {
-            context.AcademicPeriods.Add(new EAcademicPeriod() { Name = "I Trimestre", StartDate = new DateOnly(2022, 3, 1), EndDate = new DateOnly(2022, 6, 10) });
-            context.AcademicPeriods.Add(new EAcademicPeriod() { Name = "II Trimestre", StartDate = new DateOnly(2022, 6, 20), EndDate = new DateOnly(2022, 9, 9) });
-            context.AcademicPeriods.Add(new EAcademicPeriod() { Name = "III Trimestre", StartDate = new DateOnly(2022, 9, 26), EndDate = new DateOnly(2022, 12, 16) });
+            context.AcademicPeriods.Add(new EAcademicPeriod() { Name = "I Trimestre", StartDate = new DateOnly(2022, 3, 1), EndDate = new DateOnly(2022, 6, 10), Year = 2022 });
+            context.AcademicPeriods.Add(new EAcademicPeriod() { Name = "II Trimestre", StartDate = new DateOnly(2022, 6, 20), EndDate = new DateOnly(2022, 9, 9), Year = 2022 });
+            context.AcademicPeriods.Add(new EAcademicPeriod() { Name = "III Trimestre", StartDate = new DateOnly(2022, 9, 26), EndDate = new DateOnly(2022, 12, 16), Year = 2022 });
             await context.SaveChangesAsync();
         }
 

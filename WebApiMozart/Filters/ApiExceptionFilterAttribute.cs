@@ -19,8 +19,8 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
              { typeof(NotFoundException), HandleNotFoundException },
             { typeof(EntityAlreadyExistException), HandleEntityAlreadyExistException },
             { typeof(AlreadyAssociatedException), HandleAlreadyAssociatedException },
-            { typeof(DbUpdateException), HandleDbUpdateException }
-
+            { typeof(DbUpdateException), HandleDbUpdateException },
+            { typeof(BusinessRuleException), HandleBusinessRuleException }
             };
     }
 
@@ -132,6 +132,25 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     private void HandleAlreadyAssociatedException(ExceptionContext context)
     {
         var exception = (AlreadyAssociatedException)context.Exception;
+
+        var details = new ProblemDetails()
+        {
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+            Title = "Error ocurred",
+            Detail = exception.Message,
+        };
+
+        context.Result = new ObjectResult(details)
+        {
+            StatusCode = StatusCodes.Status412PreconditionFailed
+        };
+
+        context.ExceptionHandled = true;
+    }
+
+    private void HandleBusinessRuleException(ExceptionContext context)
+    {
+        var exception = (BusinessRuleException)context.Exception;
 
         var details = new ProblemDetails()
         {

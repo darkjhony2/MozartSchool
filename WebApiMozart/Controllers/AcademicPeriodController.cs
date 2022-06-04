@@ -43,5 +43,11 @@ public class AcademicPeriodController : RestApiControllerBase
         return Ok();
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateAcademicPeriodDTO dto)
+    {
+        await Mediator.Send(new UpdateAcademicPeriodCommand() { Id = id , Resource = dto });
+        return Ok();
+    }
 
 }
