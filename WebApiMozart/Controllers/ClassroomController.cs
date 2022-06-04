@@ -43,5 +43,16 @@ namespace WebApiMozart.Controllers
             return Ok(data);
         }
 
+
+        /// <summary>
+        /// Elimina un salón de clases
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var data = await Mediator.Send(new DeleteClassroomCommand { ClassroomId = id });
+            return Ok(data);
+        }
     }
 }
