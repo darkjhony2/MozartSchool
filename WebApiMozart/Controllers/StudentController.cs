@@ -29,6 +29,17 @@ namespace WebApiMozart.Controllers
             return Ok(data);
         }
 
+        /// <summary>
+        /// Obtiene el detalle de un estudiante por su Tipo y numero de documento
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("detail/documentType/{DocumentTypeId}/number/{DocumentNumber}")]
+        public async Task<IActionResult> GetDetailByDocument([FromRoute] GetStudentByDocumentQuery query)
+        {
+            var data = await Mediator.Send(query);
+            return Ok(data);
+        }
+
 
         /// <summary>
         /// Listar los estudiantes por el grado (nivel académico)

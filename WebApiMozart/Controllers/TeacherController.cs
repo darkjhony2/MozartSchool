@@ -1,4 +1,5 @@
 ﻿using ColegioMozart.Application.Teachers.Commands;
+using ColegioMozart.Application.Teachers.Dtos;
 using ColegioMozart.Application.Teachers.Queries;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,5 +41,17 @@ namespace WebApiMozart.Controllers
             await Mediator.Send(data);
             return Ok(data);
         }
+
+        /// <summary>
+        /// Actualiza los datos personales de un docente
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePersonalData([FromRoute] Guid id, [FromBody] UpdateTeacherResource resource)
+        {
+            await Mediator.Send(new UpdateTeacherPersonalDataCommand() { Resource = resource, TeacherId = id });
+            return Ok();
+        }
+
     }
 }

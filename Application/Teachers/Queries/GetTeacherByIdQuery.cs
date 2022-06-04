@@ -1,14 +1,15 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Teachers.Dtos;
 using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.Teachers.Queries;
 
-public class GetTeacherByIdQuery : IRequest<TeacherDTO>
+public class GetTeacherByIdQuery : IRequest<TeacherDetailDTO>
 {
     public Guid Id { get; set; }
 }
 
-public class GetTeacherByIdQueryHandler : IRequestHandler<GetTeacherByIdQuery, TeacherDTO>
+public class GetTeacherByIdQueryHandler : IRequestHandler<GetTeacherByIdQuery, TeacherDetailDTO>
 {
     private readonly ILogger<GetTeacherByIdQueryHandler> _logger;
     private readonly IApplicationDbContext _context;
@@ -24,13 +25,13 @@ public class GetTeacherByIdQueryHandler : IRequestHandler<GetTeacherByIdQuery, T
         _mapper = mapper;
     }
 
-    public async Task<TeacherDTO> Handle(GetTeacherByIdQuery request, CancellationToken cancellationToken)
+    public async Task<TeacherDetailDTO> Handle(GetTeacherByIdQuery request, CancellationToken cancellationToken)
     {
         var teacher = await _context
             .Teachers
             .AsNoTracking()
             .Where(x => x.Id == request.Id)
-            .ProjectTo<TeacherDTO>(_mapper.ConfigurationProvider)
+            .ProjectTo<TeacherDetailDTO>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync();
 
         if (teacher == null)

@@ -1,21 +1,20 @@
-﻿using ColegioMozart.Application.AcademicLevels;
-using ColegioMozart.Application.ClassRoom.dtos;
-using ColegioMozart.Application.Common.Mappings;
+﻿using ColegioMozart.Application.Common.Mappings;
 using ColegioMozart.Application.DocumentTypes.Dtos;
 using ColegioMozart.Application.Genders.Dtos;
 using ColegioMozart.Domain.Entities;
 
-namespace ColegioMozart.Application.Students.Dtos;
+namespace ColegioMozart.Application.Teachers.Dtos;
 
-public class StudentDetailDTO : IMapFrom<EStudent>
+public class TeacherDetailDTO : IMapFrom<ETeacher>
 {
-    public StudentPersonDTO Person { get; set; }
-    public ClassRoomDto ClassRoom { get; set; }
-    public AcademicLevelDTO CurrentAcademicLevel { get; set; }
+    public TeacherPersonDTO Person { get; set; }
+
+    public string Email { get; set; }
+    public string Phone { get; set; }
 }
 
 
-public class StudentPersonDTO : IMapFrom<EPerson>
+public class TeacherPersonDTO : IMapFrom<EPerson>
 {
     public string Name { get; set; }
     public string MothersLastName { get; set; }
