@@ -56,4 +56,16 @@ public class ShiftController : RestApiControllerBase
         return Ok(resource);
     }
 
+
+    /// <summary>
+    /// Elimina un turno
+    /// </summary>
+    /// <returns></returns>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await Mediator.Send(new DeleteShiftCommand() { Id = id });
+        return Ok();
+    }
+
 }
