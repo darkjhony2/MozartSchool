@@ -14,7 +14,7 @@ namespace ColegioMozart.Application.Subjects.Commands.CreateSubject
             RuleFor(x => x.Name)
                 .NotNull()
                 .NotEmpty()
-                .Matches(x => "^[a-zA-Z]+[ a-zA-Z-_]+[0-9]*$").WithMessage("Solo se permiten letras y números para el nombre");
+                .Matches(x => "^[A-zÀ-ú]+[ a-zA-Z-_]+[0-9]*$").WithMessage("Solo se permiten letras y números para el nombre");
 
         }
 
