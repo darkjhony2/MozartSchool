@@ -25,6 +25,12 @@ public interface IApplicationDbContext
     DbSet<EEntityFields> EntityFields { get; }
     DbSet<EEntity> Entities { get; }
     DbSet<EView> Views { get; }
+
+
+    DbSet<EEvaluationType> EvaluationTypes { get; }
+    DbSet<EEvaluation> Evaluations { get; }
+    DbSet<EEvaluationScore> EvaluationScores { get; }
+
     IQueryable GetQueryable(Type type);
 
     EntityEntry<TEntity> Entry<TEntity>(TEntity entity)

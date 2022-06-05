@@ -53,6 +53,12 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
     public DbSet<EClassSchedule> ClassSchedules => Set<EClassSchedule>();
 
+    public DbSet<EEvaluationType> EvaluationTypes => Set<EEvaluationType>();
+    public DbSet<EEvaluation> Evaluations => Set<EEvaluation>();
+    public DbSet<EEvaluationScore> EvaluationScores => Set<EEvaluationScore>();
+
+
+
     public IQueryable GetQueryable(Type type)
     {
         var method = typeof(DbContext).GetMethods().Where(x => x.Name == "Set").FirstOrDefault();

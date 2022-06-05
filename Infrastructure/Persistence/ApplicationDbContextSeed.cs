@@ -1,6 +1,7 @@
 ﻿using ColegioMozart.Domain.Common;
 using ColegioMozart.Domain.Entities;
 using ColegioMozart.Infrastructure.Identity;
+using ColegioMozart.Infrastructure.Seeds;
 using Microsoft.AspNetCore.Identity;
 
 namespace ColegioMozart.Infrastructure.Persistence;
@@ -515,6 +516,19 @@ public static class ApplicationDbContextSeed
 
 
         }
+
+        var type = typeof(ISeedDbContext);
+
+        var types = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(s => s.GetTypes())
+            .Where(p => type.IsAssignableFrom(p) && p.IsClass);
+
+        foreach (var seedType in types)
+        {
+            var bClass = (ISeedDbContext)Activator.CreateInstance(seedType);
+            await bClass.SeedSampleDataAsync(context);
+        }
+
     }
 
     private static async Task<int> AddAcademicLevel(ApplicationDbContext context, string level, int? previousId, EAcademicScale academicScale)
