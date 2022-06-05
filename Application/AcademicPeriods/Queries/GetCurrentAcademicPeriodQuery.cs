@@ -4,6 +4,7 @@ namespace ColegioMozart.Application.AcademicPeriods.Queries;
 
 public class GetCurrentAcademicPeriodQuery : IRequest<AcademicPeriodDTO>
 {
+    public DateTime Date { get; set; }
 }
 
 public class GetCurrentAcademicPeriodQueryHandler : IRequestHandler<GetCurrentAcademicPeriodQuery, AcademicPeriodDTO>
@@ -29,7 +30,7 @@ public class GetCurrentAcademicPeriodQueryHandler : IRequestHandler<GetCurrentAc
     {
         _logger.LogInformation("Find academic period for current date");
 
-        var currentDate = DateOnly.FromDateTime(DateTime.Now);
+        var currentDate = DateOnly.FromDateTime(request.Date);
 
         var academicPeriod = await _context.AcademicPeriods
             .Where(x => x.StartDate <= currentDate && x.EndDate >= currentDate)
@@ -38,7 +39,7 @@ public class GetCurrentAcademicPeriodQueryHandler : IRequestHandler<GetCurrentAc
 
         if (academicPeriod == null)
         {
-            throw new NotFoundException($"No se encontró un periodo académico registrado para el fecha actual ({currentDate.ToString("dd/MM/yyyy")})");
+            throw new NotFoundException($"No se encontró un periodo académico registrado para el fecha ({currentDate.ToString("dd/MM/yyyy")})");
         }
 
 

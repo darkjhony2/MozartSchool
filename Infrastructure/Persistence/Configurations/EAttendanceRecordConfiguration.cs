@@ -31,10 +31,6 @@ public class EAttendanceRecordConfiguration : AuditableEntityMap<EAttendanceReco
         builder.Property(x => x.AttendanceStatusId).IsRequired();
         builder.Property(x => x.AcademicPeriodId).IsRequired();
 
-        builder.HasOne(x => x.Student)
-            .WithMany()
-            .OnDelete(DeleteBehavior.Restrict);
-
         builder.HasOne(x => x.AttendanceStatus)
             .WithMany()
             .OnDelete(DeleteBehavior.Restrict);

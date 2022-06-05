@@ -38,7 +38,7 @@ namespace WebApiMozart.Controllers
         public async Task<IActionResult> RegisterAttendanceForClassroom(
             [FromRoute] Guid ClassroomId,
             [FromRoute] DateTime Date,
-            [FromBody] List<RegisterAttendaceRecordForClassroomResource> studentsAttendance)
+            [FromBody] List<RegisterAttendaceRecordResource> studentsAttendance)
         {
             var data = await Mediator.Send(new RegisterAttendanceRecordForClassroomCommand
             {
@@ -49,6 +49,23 @@ namespace WebApiMozart.Controllers
             return Ok(data);
         }
 
+
+        /// <summary>
+        /// Actualiza la asistencia para un alumno en un día específico
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("date/{Date}")]
+        public async Task<IActionResult> UpdateAttendanceRecordForStudent(
+            [FromRoute] DateTime Date,
+            [FromBody] RegisterAttendaceRecordResource studentsAttendance)
+        {
+            var data = await Mediator.Send(new UpdateAttendanceRecordForStudentCommand
+            {
+                Date = Date,
+                Resource = studentsAttendance
+            });
+            return Ok(data);
+        }
         //
 
     }

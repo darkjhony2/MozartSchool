@@ -1,7 +1,10 @@
 ﻿using ColegioMozart.Application.AcademicPeriods.Queries;
 using ColegioMozart.Application.AttendanceRecord.Dtos;
+using ColegioMozart.Application.AttendanceStatus.Queries;
 using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.StudentClassroom.Queries.StudentsByClassroom;
 using ColegioMozart.Domain.Entities;
+using System.Text;
 
 namespace ColegioMozart.Application.AttendanceRecord.Commands;
 
@@ -9,7 +12,7 @@ public class RegisterAttendanceRecordForClassroomCommand : IRequest
 {
     public Guid ClassroomId { get; set; }
     public DateTime Date { get; set; }
-    public List<RegisterAttendaceRecordForClassroomResource> StudentsAttendance { get; set; }
+    public List<RegisterAttendaceRecordResource> StudentsAttendance { get; set; }
 }
 
 public class RegisterAttendanceRecordForClassroomCommandHandler : IRequestHandler<RegisterAttendanceRecordForClassroomCommand>
@@ -38,20 +41,39 @@ public class RegisterAttendanceRecordForClassroomCommandHandler : IRequestHandle
     {
         _logger.LogInformation("Registrar asistencia para un salón de clases {}", request.ClassroomId);
 
-        var currentAcademicPeriod = await _mediator.Send(new GetCurrentAcademicPeriodQuery());
+        var currentAcademicPeriod = await _mediator.Send(new GetCurrentAcademicPeriodQuery() { Date = request.Date });
+        var classroomWithStudents = await _mediator.Send(new GetAllStudentsByClassroomId() { ClassroomId = request.ClassroomId });
+        var attendanceStatus = await _mediator.Send(new GetAllAttendanceStatusQuery());
 
-        var classroom = await _context.ClassRooms.Where(x => x.Id == request.ClassroomId).FirstOrDefaultAsync();
+        var attendanceStatusIds = request.StudentsAttendance.Select(x => x.AttendanceStatusId).Distinct().ToList();
 
-        if (classroom == null)
+        if (!attendanceStatusIds.All(attendanceStatus.Select(x => x.Id).Contains))
         {
-            throw new NotFoundException("Salón de clases", request.ClassroomId);
+            throw new NotFoundException("Algún tipo de asistencia no es el correcto.");
         }
 
-        //Pendiete validaciones
-        //-Usuarios repetidos en array
-        //-Registro de asistencia para un alumno ya registrado
-        //-Validar que todos los usuarios existan
-        //-Validar que todos los estado de asistencia existan
+        var studentIdsFromRequest = request.StudentsAttendance.Select(x => x.StudentId).ToList();
+
+        var studentIsFromClassroom = classroomWithStudents.Students.Select(x => x.Id).ToList();
+
+        var equalsStudents = studentIdsFromRequest.All(studentIsFromClassroom.Contains) && studentIdsFromRequest.Count == studentIsFromClassroom.Count;
+
+        if (equalsStudents == false)
+        {
+            var notFoundStudentsIds = studentIsFromClassroom.Where(p => !studentIdsFromRequest.Any(p2 => p2 == p)).ToList();
+            var studentsNotFound = classroomWithStudents.Students.Where(x => notFoundStudentsIds.Contains(x.Id)).ToList();
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Se debe tomar asistencia a todo el salón.");
+            sb.AppendLine("Faltan los alumnos : ");
+
+            foreach (var student in studentsNotFound)
+            {
+                sb.AppendLine($"\t {student.LastName} {student.MothersLastName} {student.Name}");
+            }
+
+            throw new BusinessRuleException(sb.ToString());
+        }
 
         var attendaceRecords = request.StudentsAttendance
             .Select(x =>
