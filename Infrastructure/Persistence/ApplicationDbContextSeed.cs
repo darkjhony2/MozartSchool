@@ -468,7 +468,53 @@ public static class ApplicationDbContextSeed
             await context.SaveChangesAsync();
         }
 
+        if (!context.AttendanceStatus.Any())
+        {
+            context.AttendanceStatus.Add(new EAttendanceStatus { Name = "Asistió", Abbreviation = "A" });
+            context.AttendanceStatus.Add(new EAttendanceStatus { Name = "Falta", Abbreviation = "F" });
+            context.AttendanceStatus.Add(new EAttendanceStatus { Name = "Tardanza", Abbreviation = "T" });
+            context.AttendanceStatus.Add(new EAttendanceStatus { Name = "Falta justificada", Abbreviation = "F.J." });
+            context.AttendanceStatus.Add(new EAttendanceStatus { Name = "Tardanza justificada", Abbreviation = "T.J." });
 
+            await context.SaveChangesAsync();
+        }
+
+        if (!context.AttendanceRecords.Any())
+        {
+            var studentIds = context.Students.ToList().Select(x => x.Id);
+            var attendanceStatus = context.AttendanceStatus.ToList().Select(x => x.Id).ToList();
+            var rnd = new Random(DateTime.Now.Millisecond);
+
+            var mayMonth = new DateTime(2022, 5, 1);
+
+            var academicPeriod = context.AcademicPeriods
+                .Where(x => x.StartDate <= DateOnly.FromDateTime(mayMonth) && x.EndDate >= DateOnly.FromDateTime(mayMonth))
+                .First();
+
+            foreach (var studentId in studentIds)
+            {
+                for (var date = mayMonth; date.Month == 5; date = date.AddDays(1))
+                {
+                    if (!(date.DayOfWeek == DayOfWeek.Sunday || date.DayOfWeek == DayOfWeek.Saturday))
+                    {
+                        int attendanceStatusId = rnd.Next(0, attendanceStatus.Count);
+
+                        context.AttendanceRecords.Add(new EAttendanceRecord
+                        {
+                            StudentId = studentId,
+                            Date = DateOnly.FromDateTime(date),
+                            AttendanceStatusId = attendanceStatus.ElementAt(attendanceStatusId),
+                            AcademicPeriod = academicPeriod
+                        });
+                    }
+                }
+
+            }
+
+            await context.SaveChangesAsync();
+
+
+        }
     }
 
     private static async Task<int> AddAcademicLevel(ApplicationDbContext context, string level, int? previousId, EAcademicScale academicScale)

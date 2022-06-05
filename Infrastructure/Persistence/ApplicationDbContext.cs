@@ -37,6 +37,9 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
     public DbSet<ETeacher> Teachers => Set<ETeacher>();
 
+    public DbSet<EAttendanceStatus> AttendanceStatus => Set<EAttendanceStatus>();
+    public DbSet<EAttendanceRecord> AttendanceRecords => Set<EAttendanceRecord>();
+
     public DbSet<EClassRoom> ClassRooms => Set<EClassRoom>();
     public DbSet<EEntityFields> EntityFields => Set<EEntityFields>();
     public DbSet<EEntity> Entities => Set<EEntity>();

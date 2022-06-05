@@ -19,7 +19,8 @@ public interface IApplicationDbContext
     DbSet<EGender> Genders { get; }
     DbSet<ESection> Sections { get; }
     DbSet<EStudent> Students { get; }
-
+    DbSet<EAttendanceStatus> AttendanceStatus { get; }
+    DbSet<EAttendanceRecord> AttendanceRecords { get; }
 
     DbSet<EEntityFields> EntityFields { get; }
     DbSet<EEntity> Entities { get; }
