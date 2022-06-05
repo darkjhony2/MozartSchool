@@ -1,4 +1,6 @@
-﻿using ColegioMozart.Application.AttendanceRecord.Queries;
+﻿using ColegioMozart.Application.AttendanceRecord.Commands;
+using ColegioMozart.Application.AttendanceRecord.Dtos;
+using ColegioMozart.Application.AttendanceRecord.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApiMozart.Controllers
@@ -26,6 +28,28 @@ namespace WebApiMozart.Controllers
             var data = await Mediator.Send(query);
             return Ok(data);
         }
+
+
+        /// <summary>
+        /// Registra el control de asistencia para un salón y una fecha
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("classroom/{ClassroomId}/date/{Date}")]
+        public async Task<IActionResult> RegisterAttendanceForClassroom(
+            [FromRoute] Guid ClassroomId,
+            [FromRoute] DateTime Date,
+            [FromBody] List<RegisterAttendaceRecordForClassroomResource> studentsAttendance)
+        {
+            var data = await Mediator.Send(new RegisterAttendanceRecordForClassroomCommand
+            {
+                ClassroomId = ClassroomId,
+                Date = Date,
+                StudentsAttendance = studentsAttendance
+            });
+            return Ok(data);
+        }
+
+        //
 
     }
 }
