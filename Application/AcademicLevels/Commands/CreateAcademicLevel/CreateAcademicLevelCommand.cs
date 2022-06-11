@@ -27,7 +27,7 @@ public class CreateAcademicLevelCommandHandler : IRequestHandler<CreateAcademicL
     public async Task<Unit> Handle(CreateAcademicLevelCommand request, CancellationToken cancellationToken)
     {
 
-        if (_context.AcademicScales.Any(o => o.Id == request.AcademicScaleId))
+        if (!_context.AcademicScales.Any(o => o.Id == request.AcademicScaleId))
         {
             throw new NotFoundException(nameof(EAcademicScale), request.AcademicScaleId);
         }
