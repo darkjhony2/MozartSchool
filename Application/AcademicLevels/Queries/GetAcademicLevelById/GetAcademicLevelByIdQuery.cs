@@ -1,11 +1,5 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using ColegioMozart.Application.Common.Exceptions;
-using ColegioMozart.Application.Common.Interfaces;
+﻿using ColegioMozart.Application.Common.Exceptions;
 using ColegioMozart.Domain.Entities;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace ColegioMozart.Application.AcademicLevels.Queries.GetAcademicLevelById;
 
@@ -40,7 +34,7 @@ public class GetAcademicLevelByIdQueryHandler : IRequestHandler<GetAcademicLevel
 
         if(result == null)
         {
-            throw new NotFoundException(nameof(EAcademicLevel), request.Id);
+            throw new NotFoundException("Nivel académico (grado)", request.Id);
         }
 
         return result;

@@ -4,6 +4,7 @@ using ColegioMozart.Application.AcademicLevels.Queries.GetAcademicLevels;
 using ColegioMozart.Application.AcademicScale.Commands;
 using ColegioMozart.Application.AcademicScale.Queries;
 using Microsoft.AspNetCore.Mvc;
+using static ColegioMozart.Application.AcademicLevels.Commands.CreateAcademicLevel.UpdateAcademicLevelCommand;
 
 namespace WebApiMozart.Controllers
 {
@@ -60,6 +61,20 @@ namespace WebApiMozart.Controllers
             await Mediator.Send(academicLevel);
             return Ok(academicLevel);
         }
+
+        /// <summary>
+        /// Actualiza un grado
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAcademicLevelResource resource)
+        {
+            await Mediator.Send(new UpdateAcademicLevelCommand { Resource = resource, AcademicLevelId = id });
+            return Ok();
+        }
+
+
+
 
 
         /// <summary>
