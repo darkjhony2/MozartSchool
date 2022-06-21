@@ -31,7 +31,7 @@ public class CreateAcademicPeriodCommandHandler : IRequestHandler<CreateAcademic
     {
         _logger.LogInformation("Crear nuevo periodo academico para el año actual");
 
-        if (await _context
+        if (!await _context
              .AcademicPeriods
              .Where(x => x.StartDate >= DateOnly.FromDateTime(request.Resource.StartDate) && x.StartDate <= DateOnly.FromDateTime(request.Resource.EndDate)
              || x.EndDate >= DateOnly.FromDateTime(request.Resource.StartDate) && x.EndDate <= DateOnly.FromDateTime(request.Resource.EndDate))
