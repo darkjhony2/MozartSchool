@@ -1,7 +1,10 @@
 ﻿using ColegioMozart.Application.AttendanceRecord.Dtos;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.AttendanceRecord.Queries;
 
+
+[Authorize]
 public class GetAttendanceRecordsByDateAndClassroomQuery : IRequest<IList<AttendanceRecordDTO>>
 {
     public DateTime Date { get; set; }

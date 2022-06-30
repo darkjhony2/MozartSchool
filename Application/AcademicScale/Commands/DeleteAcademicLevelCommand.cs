@@ -1,7 +1,10 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.AcademicScale.Commands;
 
+
+[Authorize]
 public class DeleteAcademicLevelCommand : IRequest
 {
     public int Id { get; set; }

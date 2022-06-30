@@ -1,5 +1,6 @@
 ﻿namespace ColegioMozart.Application.Shifts.Queries;
 
+[Authorize]
 public class GetShiftsQuery : IRequest<IList<ShiftDTO>>
 {
 }

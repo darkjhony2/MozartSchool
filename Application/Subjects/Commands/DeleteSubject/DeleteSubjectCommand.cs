@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ColegioMozart.Application.Subjects.Commands.DeleteSubject;
 
+[Authorize]
 public class DeleteSubjectCommand : IRequest
 {
     public Guid Id { get; set; }

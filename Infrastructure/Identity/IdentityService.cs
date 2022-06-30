@@ -1,8 +1,10 @@
-﻿using ColegioMozart.Application.Common.Interfaces;
+﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Interfaces;
 using ColegioMozart.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace ColegioMozart.Infrastructure.Identity;
 
@@ -77,5 +79,24 @@ public class IdentityService : IIdentityService
         var result = await _userManager.DeleteAsync(user);
 
         return result.ToApplicationResult();
+    }
+
+    public async Task<(bool, string)> VerifyCredentialsAsync(string userName, string password)
+    {
+        var user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userName);
+
+        if (user == null)
+        {
+            throw new NotFoundException($"Usuario {userName} no existe");
+        }
+
+
+        var isValid = await _userManager.CheckPasswordAsync(user, password);
+
+
+        Log.Information("Credentials for {user} are valid : {}", userName, isValid);
+
+
+        return (isValid, user.Id);
     }
 }

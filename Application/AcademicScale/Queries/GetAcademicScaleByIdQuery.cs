@@ -1,8 +1,11 @@
 ﻿using ColegioMozart.Application.AcademicScale.Dtos;
 using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.AcademicScale.Queries;
 
+
+[Authorize]
 public class GetAcademicScaleByIdQuery : IRequest<AcademicScaleDTO>
 {
     public int Id { get; set; } 

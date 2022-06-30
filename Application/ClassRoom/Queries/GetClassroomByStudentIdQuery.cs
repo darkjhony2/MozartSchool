@@ -1,8 +1,11 @@
 ﻿using ColegioMozart.Application.ClassRoom.dtos;
 using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.ClassRoom.Queries;
 
+
+[Authorize]
 public class GetClassroomByStudentIdQuery : IRequest<ClassRoomDto>
 {
     public Guid StudentId { get; set; }

@@ -1,5 +1,9 @@
-﻿namespace ColegioMozart.Application.AcademicPeriods.Queries;
+﻿using ColegioMozart.Application.Common.Security;
 
+namespace ColegioMozart.Application.AcademicPeriods.Queries;
+
+
+[Authorize]
 public class GetAcademicPeriodCurrentYearQuery : IRequest<IList<AcademicPeriodDTO>>
 {
 }

@@ -1,8 +1,11 @@
 ﻿using ColegioMozart.Application.AcademicLevels;
 using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.AcademicScale.Queries;
 
+
+[Authorize]
 public class GetAcademicLevelByAcademicScaleId : IRequest<IList<AcademicLevelDTO>>
 {
     public int AcademicScaleId { get; set; }

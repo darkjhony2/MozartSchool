@@ -1,8 +1,10 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.EvaluationTypes.Commands;
 
+[Authorize]
 public class AddEvaluationTypeCommand : IRequest
 {
     public string Name { get; set; }

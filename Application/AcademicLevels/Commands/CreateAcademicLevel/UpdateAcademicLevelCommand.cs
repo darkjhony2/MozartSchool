@@ -1,10 +1,12 @@
 ﻿using ColegioMozart.Application.AcademicLevels.Queries.GetAcademicLevelById;
 using ColegioMozart.Application.AcademicScale.Queries;
 using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.AcademicLevels.Commands.CreateAcademicLevel;
 
+[Authorize]
 public class UpdateAcademicLevelCommand : IRequest
 {
     public int AcademicLevelId { get; set; }

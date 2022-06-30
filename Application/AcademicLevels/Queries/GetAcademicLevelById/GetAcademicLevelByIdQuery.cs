@@ -1,8 +1,10 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.AcademicLevels.Queries.GetAcademicLevelById;
 
+[Authorize]
 public class GetAcademicLevelByIdQuery : IRequest<AcademicLevelDTO>
 {
     public int Id { get; set; }

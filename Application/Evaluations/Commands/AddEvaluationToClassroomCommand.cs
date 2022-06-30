@@ -1,7 +1,9 @@
-﻿using ColegioMozart.Application.Evaluations.Dtos;
+﻿using ColegioMozart.Application.Common.Security;
+using ColegioMozart.Application.Evaluations.Dtos;
 
 namespace ColegioMozart.Application.Evaluations.Commands;
 
+[Authorize]
 public class AddEvaluationToClassroomCommand : IRequest
 {
     public AddEvaluationResource Resource { get; set; }

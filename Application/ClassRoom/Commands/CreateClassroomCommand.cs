@@ -1,8 +1,11 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.ClassRoom.Commands;
 
+
+[Authorize]
 public class CreateClassroomCommand : IRequest
 {
     public int AcademicLevelId { get; set; }

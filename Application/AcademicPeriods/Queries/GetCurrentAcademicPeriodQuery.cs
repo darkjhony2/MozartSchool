@@ -1,7 +1,10 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.AcademicPeriods.Queries;
 
+
+[Authorize]
 public class GetCurrentAcademicPeriodQuery : IRequest<AcademicPeriodDTO>
 {
     public DateTime Date { get; set; }

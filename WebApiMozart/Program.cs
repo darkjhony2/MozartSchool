@@ -3,6 +3,8 @@ using ColegioMozart.Infrastructure.Identity;
 using ColegioMozart.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace WebApiMozart
 {
@@ -10,8 +12,13 @@ namespace WebApiMozart
     {
         public async static Task Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            //Initialize Logger    
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(config).CreateLogger();
 
+
+            var host = CreateHostBuilder(args).Build();
+  
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -46,6 +53,7 @@ namespace WebApiMozart
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
            Host.CreateDefaultBuilder(args)
+                .UseSerilog()
                 .ConfigureAppConfiguration((context, config) =>
                 {
 

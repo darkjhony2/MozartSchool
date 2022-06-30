@@ -1,8 +1,10 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Application.EvaluationTypes.Dtos;
 
 namespace ColegioMozart.Application.EvaluationTypes.Queries;
 
+[Authorize]
 public class GetEvaluationTypeByIdQuery : IRequest<EvaluationTypeDTO>
 {
     public int Id { get; set; }

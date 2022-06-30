@@ -4,6 +4,7 @@ using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.Teachers.Commands;
 
+[Authorize]
 public class CreateTeacherCommand : IRequest, IMapTo<ETeacher>
 {
     public string Name { get; set; }

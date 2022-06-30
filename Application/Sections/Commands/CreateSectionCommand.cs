@@ -1,8 +1,11 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.Sections.Commands;
 
+
+[Authorize]
 public class CreateSectionCommand : IRequest
 {
     public string Name { get; set; }

@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using ColegioMozart.Application.Common.Exceptions;
 using ColegioMozart.Application.Common.Interfaces;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Domain.Entities;
 using MediatR;
 
 namespace ColegioMozart.Application.AcademicLevels.Commands.CreateAcademicLevel;
 
+[Authorize]
 public class CreateAcademicLevelCommand : IRequest
 {
     public string Level { get; set; }

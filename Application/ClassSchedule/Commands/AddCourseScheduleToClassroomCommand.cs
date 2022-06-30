@@ -1,9 +1,12 @@
 ﻿using ColegioMozart.Application.ClassSchedule.Queries;
 using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.ClassSchedule.Commands;
 
+
+[Authorize]
 public class AddCourseScheduleToClassroomCommand : IRequest
 {
     public Guid ClassroomId { get; set; }

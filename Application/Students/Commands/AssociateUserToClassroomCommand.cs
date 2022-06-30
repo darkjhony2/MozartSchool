@@ -2,6 +2,7 @@
 
 namespace ColegioMozart.Application.Students.Commands;
 
+[Authorize]
 public class AssociateUserToClassroomCommand : IRequest
 {
     public Guid ClassroomId { get; set; }

@@ -1,5 +1,8 @@
-﻿namespace ColegioMozart.Application.AcademicLevels.Queries.GetAcademicLevels;
+﻿using ColegioMozart.Application.Common.Security;
 
+namespace ColegioMozart.Application.AcademicLevels.Queries.GetAcademicLevels;
+
+[Authorize]
 public class GetAcademicLevelsQuery : IRequest<IList<AcademicLevelDTO>>
 {
 

@@ -2,6 +2,7 @@
 
 namespace ColegioMozart.Application.Shifts.Queries;
 
+[Authorize]
 public class GetShiftByIdQuery : IRequest<ShiftDTO>
 {
     public int Id { get; set; }

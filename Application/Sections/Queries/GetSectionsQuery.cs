@@ -1,5 +1,6 @@
 ﻿namespace ColegioMozart.Application.Sections.Queries;
 
+[Authorize]
 public class GetSectionsQuery : IRequest<IList<SectionDTO>>
 {
     

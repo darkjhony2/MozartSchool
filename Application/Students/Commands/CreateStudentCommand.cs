@@ -3,6 +3,7 @@ using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.Students.Commands;
 
+[Authorize]
 public class CreateStudentCommand : IRequest
 {
     public string Name { get; set; }

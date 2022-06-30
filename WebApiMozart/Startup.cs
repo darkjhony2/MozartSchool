@@ -3,9 +3,12 @@ using ColegioMozart.Application.Common.Interfaces;
 using ColegioMozart.Application.Common.Utils;
 using ColegioMozart.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
 using WebApiMozart.Filters;
+using WebApiMozart.Models;
 using WebApiMozart.Services;
+using WebApiMozart.Services.TokenGenerators;
 using WebApiMozart.Utils;
 
 namespace WebApiMozart;
@@ -21,12 +24,37 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+
+        AuthenticationConfiguration authenticationConfiguration = new AuthenticationConfiguration();
+        Configuration.Bind("Authentication", authenticationConfiguration);
+        services.AddSingleton(authenticationConfiguration);
+
+        services.AddSingleton<AccessTokenGenerator>();
+        services.AddScoped<Authenticator>();
+        services.AddSingleton<TokenGenerator>();
+
+
+        services.AddApplication();
+        services.AddInfrastructure(Configuration);
+
         services.AddHttpContextAccessor();
 
         services.AddSwaggerGen(options =>
         {
             string path = Assembly.GetEntryAssembly()!.GetName().Name + ".xml";
             SwaggerGenOptionsExtensions.IncludeXmlComments(options, Path.Combine(AppContext.BaseDirectory, path), false);
+
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer"
+            });
+
         });
 
         services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -42,7 +70,7 @@ public class Startup
 
             j.JsonSerializerOptions.Converters.Add(new TimeOnlyFormmatter());
         });
-        
+
         services.AddEndpointsApiExplorer();
         services.AddHealthChecks();
 
@@ -58,9 +86,7 @@ public class Startup
             });
         });
 
-        services.AddApplication();
 
-        services.AddInfrastructure(Configuration);
 
     }
 
@@ -87,6 +113,10 @@ public class Startup
         });
 
         app.UseRouting();
+
+        app.UseAuthentication();
+        app.UseIdentityServer();
+        app.UseAuthorization();
 
         app.UseHealthChecks("/health");
         app.UseHttpsRedirection();

@@ -1,4 +1,5 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace ColegioMozart.Application.ClassRoom.Commands;
 
+
+[Authorize]
 public class DeleteClassroomCommand : IRequest
 {
     public Guid ClassroomId { get; set; }

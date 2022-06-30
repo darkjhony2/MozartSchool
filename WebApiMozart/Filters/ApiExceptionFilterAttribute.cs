@@ -17,6 +17,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
             {
               { typeof(ValidationException), HandleValidationException },
              { typeof(NotFoundException), HandleNotFoundException },
+            { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
             { typeof(EntityAlreadyExistException), HandleEntityAlreadyExistException },
             { typeof(AlreadyAssociatedException), HandleAlreadyAssociatedException },
             { typeof(DbUpdateException), HandleDbUpdateException },

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ColegioMozart.Application.Subjects.Queries.GetSubjectById;
 
+[Authorize]
 public class GetSubjectByIdQuery : IRequest<ESubjectDTO>
 {
     public Guid Id { get; init; }

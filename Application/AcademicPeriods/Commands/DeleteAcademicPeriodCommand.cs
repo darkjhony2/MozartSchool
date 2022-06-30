@@ -1,7 +1,10 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.AcademicPeriods.Commands;
 
+
+[Authorize]
 public class DeleteAcademicPeriodCommand : IRequest
 {
     public Guid Id { get; set; }
