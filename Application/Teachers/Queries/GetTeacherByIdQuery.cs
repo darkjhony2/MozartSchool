@@ -4,6 +4,7 @@ using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.Teachers.Queries;
 
+[Authorize]
 public class GetTeacherByIdQuery : IRequest<TeacherDetailDTO>
 {
     public Guid Id { get; set; }

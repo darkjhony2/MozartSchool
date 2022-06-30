@@ -4,6 +4,7 @@ using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.Students.Commands;
 
+[Authorize]
 public class UpdateStudentPersonalDataCommand : IRequest
 {
     public Guid StudentId { get; set; }

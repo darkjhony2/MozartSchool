@@ -1,7 +1,9 @@
-﻿using ColegioMozart.Application.EvaluationTypes.Dtos;
+﻿using ColegioMozart.Application.Common.Security;
+using ColegioMozart.Application.EvaluationTypes.Dtos;
 
 namespace ColegioMozart.Application.EvaluationTypes.Queries;
 
+[Authorize]
 public class GetAllEvaluationTypesQuery : IRequest<IList<EvaluationTypeDTO>>
 {
 }

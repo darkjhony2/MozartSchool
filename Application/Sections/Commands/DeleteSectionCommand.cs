@@ -1,7 +1,10 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.Sections.Commands;
 
+
+[Authorize]
 public class DeleteSectionCommand : IRequest
 {
     public int Id { get; set; }

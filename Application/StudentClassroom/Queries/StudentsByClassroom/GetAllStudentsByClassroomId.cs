@@ -2,6 +2,7 @@
 
 namespace ColegioMozart.Application.StudentClassroom.Queries.StudentsByClassroom;
 
+[Authorize]
 public class GetAllStudentsByClassroomId : IRequest<StudentClassroomDTO>
 {
     public Guid ClassroomId { get; set; }

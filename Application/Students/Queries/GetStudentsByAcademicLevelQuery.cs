@@ -2,6 +2,7 @@
 
 namespace ColegioMozart.Application.Students.Queries;
 
+[Authorize]
 public class GetStudentsByAcademicLevelQuery : IRequest<IList<StudentDTO>>
 {
     public int AcademicLevelId { get; set; }

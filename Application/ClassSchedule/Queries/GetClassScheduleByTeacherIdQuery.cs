@@ -1,7 +1,10 @@
 ﻿using ColegioMozart.Application.ClassSchedule.Dtos;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.ClassSchedule.Queries;
 
+
+[Authorize]
 public class GetClassScheduleByTeacherIdQuery : IRequest<IList<ClassScheduleForTeacherDTO>>
 {
     public Guid TeacherId { get; set; }

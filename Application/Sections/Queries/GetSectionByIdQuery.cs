@@ -1,8 +1,11 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.Sections.Queries;
 
+
+[Authorize]
 public class GetSectionByIdQuery : IRequest<SectionDTO>
 {
     public int Id { get; set; }

@@ -1,5 +1,6 @@
 ﻿namespace ColegioMozart.Application.Teachers.Queries;
 
+[Authorize]
 public class GetAllTeachersQuery : IRequest<IList<TeacherDTO>>
 {
 

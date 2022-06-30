@@ -1,8 +1,10 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.AcademicPeriods.Commands;
 
+[Authorize]
 public class CreateAcademicPeriodCommand : IRequest
 {
     public CreateAcademicPeriodDTO Resource;

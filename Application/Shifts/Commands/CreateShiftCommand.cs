@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ColegioMozart.Application.Shifts.Commands;
 
+[Authorize]
 public class CreateShiftCommand : IRequest
 {
     public string Name { get; set; }

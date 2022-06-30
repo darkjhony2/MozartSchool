@@ -2,12 +2,15 @@
 using ColegioMozart.Application.AttendanceRecord.Dtos;
 using ColegioMozart.Application.AttendanceStatus.Queries;
 using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Application.StudentClassroom.Queries.StudentsByClassroom;
 using ColegioMozart.Domain.Entities;
 using System.Text;
 
 namespace ColegioMozart.Application.AttendanceRecord.Commands;
 
+
+[Authorize]
 public class RegisterAttendanceRecordForClassroomCommand : IRequest
 {
     public Guid ClassroomId { get; set; }

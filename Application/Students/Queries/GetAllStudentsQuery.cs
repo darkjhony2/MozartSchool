@@ -2,6 +2,7 @@
 
 namespace ColegioMozart.Application.Students.Queries;
 
+[Authorize]
 public class GetAllStudentsQuery : IRequest<IList<StudentDTO>>
 {
 }

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ColegioMozart.Application.Subjects.Queries;
 
+[Authorize]
 public class GetSubjectsQuery : IRequest<IList<ESubjectDTO>>
 {
 

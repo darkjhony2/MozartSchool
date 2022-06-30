@@ -3,6 +3,7 @@ using ColegioMozart.Application.Common.Models;
 
 namespace ColegioMozart.Application.Subjects.Queries.GetSubjectsByFilters;
 
+[Authorize]
 public class GetSubjectsByFiltersQuery : IRequest<PaginatedList<ESubjectDTO>>
 {
     public SubjectFilterDTO SubjectFilter { get; set; }

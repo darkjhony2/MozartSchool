@@ -1,8 +1,11 @@
 ﻿using ColegioMozart.Application.AttendanceRecord.Dtos;
 using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.AttendanceRecord.Queries;
 
+
+[Authorize]
 public class GetAttendanceRecordByAcademicPeriodAndStudentQuery : IRequest<IList<AttendanceRecordForStudentDTO>>
 {
     public Guid AcademicPeriodId { get; set; }

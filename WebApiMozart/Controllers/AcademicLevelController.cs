@@ -3,6 +3,7 @@ using ColegioMozart.Application.AcademicLevels.Queries.GetAcademicLevelById;
 using ColegioMozart.Application.AcademicLevels.Queries.GetAcademicLevels;
 using ColegioMozart.Application.AcademicScale.Commands;
 using ColegioMozart.Application.AcademicScale.Queries;
+using ColegioMozart.Application.Common.Security;
 using Microsoft.AspNetCore.Mvc;
 using static ColegioMozart.Application.AcademicLevels.Commands.CreateAcademicLevel.UpdateAcademicLevelCommand;
 
@@ -12,6 +13,7 @@ namespace WebApiMozart.Controllers
     /// <summary>
     /// Grados
     /// </summary>
+    /// 
     public class AcademicLevelController : RestApiControllerBase
     {
 

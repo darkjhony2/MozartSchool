@@ -1,7 +1,10 @@
 ﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.ClassSchedule.Commands;
 
+
+[Authorize]
 public class DeleteCourseFromClassScheduleByIdCommand : IRequest
 {
     public Guid ClassScheduleId { get; set; }

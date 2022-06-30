@@ -2,10 +2,13 @@
 using ColegioMozart.Application.AttendanceRecord.Dtos;
 using ColegioMozart.Application.AttendanceStatus.Queries;
 using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 using ColegioMozart.Application.Students.Queries;
 
 namespace ColegioMozart.Application.AttendanceRecord.Commands;
 
+
+[Authorize]
 public class UpdateAttendanceRecordForStudentCommand : IRequest
 {
     public DateTime Date { get; set; }

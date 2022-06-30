@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ColegioMozart.Application.Subjects.Commands.CreateSubject;
 
+[Authorize]
 public class CreateSubjectCommand : IRequest<Guid>
 {
     [Required]

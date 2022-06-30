@@ -1,8 +1,11 @@
 ﻿using ColegioMozart.Application.AttendanceStatus.Dtos;
 using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.AttendanceStatus.Queries;
 
+
+[Authorize]
 public class GetAttendanceStatusByIdQuery : IRequest<AttendanceStatusDTO>
 {
     public int Id { get; set; }

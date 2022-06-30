@@ -10,7 +10,7 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
 {
     private readonly ICurrentUserService _currentUserService;
     private readonly IIdentityService _identityService;
-
+     
     public AuthorizationBehaviour(
         ICurrentUserService currentUserService,
         IIdentityService identityService)

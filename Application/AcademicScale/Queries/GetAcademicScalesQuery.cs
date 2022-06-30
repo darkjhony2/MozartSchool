@@ -1,7 +1,10 @@
 ﻿using ColegioMozart.Application.AcademicScale.Dtos;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.AcademicScale.Queries;
 
+
+[Authorize]
 public class GetAcademicScalesQuery : IRequest<IList<AcademicScaleDTO>>
 {
 }

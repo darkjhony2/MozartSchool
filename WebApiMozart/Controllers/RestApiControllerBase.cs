@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ColegioMozart.Application.Common.Security;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApiMozart.Controllers

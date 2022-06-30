@@ -6,6 +6,7 @@ using MediatR;
 
 namespace ColegioMozart.Application.Subjects.Commands.UpdateSubject;
 
+[Authorize]
 public class UpdateSubjectCommand : IRequest
 {
     public Guid Id { get; init; }

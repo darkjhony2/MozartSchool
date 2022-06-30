@@ -1,8 +1,10 @@
-﻿using ColegioMozart.Application.EvaluationTypes.Queries;
+﻿using ColegioMozart.Application.Common.Security;
+using ColegioMozart.Application.EvaluationTypes.Queries;
 using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.EvaluationTypes.Commands;
 
+[Authorize]
 public class DeleteEvaluationTypeCommand : IRequest
 {
     public int Id { get; set; }

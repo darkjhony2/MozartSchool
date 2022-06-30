@@ -3,6 +3,7 @@ using ColegioMozart.Application.Students.Dtos;
 
 namespace ColegioMozart.Application.Students.Queries;
 
+[Authorize]
 public class GetStudentByIdQuery : IRequest<StudentDetailDTO>
 {
     public Guid StudentId { get; set; }

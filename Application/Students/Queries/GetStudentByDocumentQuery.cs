@@ -3,6 +3,7 @@ using ColegioMozart.Application.Students.Dtos;
 
 namespace ColegioMozart.Application.Students.Queries;
 
+[Authorize]
 public class GetStudentByDocumentQuery : IRequest<StudentDetailDTO>
 {
     public int DocumentTypeId { get; set; }

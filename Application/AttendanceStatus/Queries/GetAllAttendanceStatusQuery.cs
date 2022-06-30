@@ -1,7 +1,10 @@
 ﻿using ColegioMozart.Application.AttendanceStatus.Dtos;
+using ColegioMozart.Application.Common.Security;
 
 namespace ColegioMozart.Application.AttendanceStatus.Queries;
 
+
+[Authorize]
 public class GetAllAttendanceStatusQuery : IRequest<IList<AttendanceStatusDTO>>
 {
 

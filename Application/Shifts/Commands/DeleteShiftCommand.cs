@@ -2,6 +2,7 @@
 
 namespace ColegioMozart.Application.Shifts.Commands;
 
+[Authorize]
 public class DeleteShiftCommand : IRequest
 {
     public int Id { get; set; }
