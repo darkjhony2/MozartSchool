@@ -1,9 +1,10 @@
-﻿using ColegioMozart.Application.Common.Security;
+﻿using ColegioMozart.Application.Common.Exceptions;
 using ColegioMozart.Application.Evaluations.Dtos;
+using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.Evaluations.Commands;
 
-[Authorize]
+[Authorize(Roles = "Docente")]
 public class AddEvaluationToClassroomCommand : IRequest
 {
     public AddEvaluationResource Resource { get; set; }
@@ -31,14 +32,45 @@ public class AddEvaluationToClassroomCommandHandler : IRequestHandler<AddEvaluat
         _mediator = mediator;
     }
 
-    public Task<Unit> Handle(AddEvaluationToClassroomCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(AddEvaluationToClassroomCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Crear nueva evaluación");
 
+        var teacherUserId = _currentUserService.UserId;
 
-        
+        var teacherId = await _context.Teachers.Where(x => x.Person.UserId == teacherUserId).Select(x => x.Id).FirstOrDefaultAsync();
 
+        var currentEvaluations = await _context.Evaluations.Where(
+                x => x.TeacherId == teacherId &&
+                x.AcademicPeriodId == request.Resource.AcademicPeriodId &&
+                x.ClassRoomId == request.Resource.ClassRoomId &&
+                x.SubjectId == request.Resource.SubjectId).ToListAsync();
 
-        throw new NotImplementedException();
+        var sumWeigth = currentEvaluations.Sum(x => x.Weight);
+
+        if (sumWeigth + request.Resource.Weight > 1)
+        {
+            throw new BusinessRuleException($"La suma de los pesos de las evaluaciones no puede superar el valor : 1. \n La suma de los puntajes actuales de : {sumWeigth}");
+        }
+
+        var evaluation = new EEvaluation
+        {
+            EvaluationTypeId = request.Resource.EvaluationTypeId,
+            EvaluationName = request.Resource.EvaluationName,
+            SubjectId = request.Resource.SubjectId,
+            AcademicPeriodId = request.Resource.AcademicPeriodId,
+            ClassRoomId = request.Resource.ClassRoomId,
+            TeacherId = teacherId,
+            Weight = request.Resource.Weight,
+            EvaluationDate = request.Resource.EvaluationDate,
+            MaxEditDate = request.Resource.EvaluationDate.AddDays(7),
+            MaximumScore = request.Resource.MaximumScore
+        };
+
+        _context.Evaluations.Add(evaluation);
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return Unit.Value;
     }
 }
