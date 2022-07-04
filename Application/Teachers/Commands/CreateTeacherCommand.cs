@@ -4,7 +4,7 @@ using ColegioMozart.Domain.Entities;
 
 namespace ColegioMozart.Application.Teachers.Commands;
 
-[Authorize]
+[Authorize(Roles = "Administrador, Director")]
 public class CreateTeacherCommand : IRequest, IMapTo<ETeacher>
 {
     public string Name { get; set; }
@@ -37,15 +37,18 @@ public class CreateTeacherCommandHandler : IRequestHandler<CreateTeacherCommand>
     private readonly ILogger<CreateTeacherCommandHandler> _logger;
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IIdentityService _identityService;
 
     public CreateTeacherCommandHandler(
         ILogger<CreateTeacherCommandHandler> logger,
         IApplicationDbContext context,
-        IMapper mapper)
+        IMapper mapper,
+        IIdentityService identityService)
     {
         _logger = logger;
         _context = context;
         _mapper = mapper;
+        _identityService = identityService;
     }
 
     public async Task<Unit> Handle(CreateTeacherCommand request, CancellationToken cancellationToken)
@@ -68,8 +71,15 @@ public class CreateTeacherCommandHandler : IRequestHandler<CreateTeacherCommand>
             throw new EntityAlreadyExistException(new HashSet<string> { "DocumentTypeId", "DocumentNumber" });
         }
 
-        
+
         var teacher = _mapper.Map<ETeacher>(request);
+
+        var userData = await _identityService.CreateUserAsync(request.DocumentNumber, $"{request.DocumentNumber}@Moz!");
+
+        if (userData.Result.Succeeded)
+        {
+            teacher.Person.UserId = userData.UserId;
+        }
 
         await _context.Teachers.AddAsync(teacher, cancellationToken);
 
