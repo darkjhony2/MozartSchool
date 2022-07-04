@@ -14,5 +14,7 @@ public interface IIdentityService
 
     Task<Result> DeleteUserAsync(string userId);
 
+    Task<IList<string>> GetUserRoles(string userId);
+
     Task<(bool, string)> VerifyCredentialsAsync(string userName, string password);
 }
