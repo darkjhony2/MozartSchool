@@ -21,7 +21,8 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
             { typeof(EntityAlreadyExistException), HandleEntityAlreadyExistException },
             { typeof(AlreadyAssociatedException), HandleAlreadyAssociatedException },
             { typeof(DbUpdateException), HandleDbUpdateException },
-            { typeof(BusinessRuleException), HandleBusinessRuleException }
+            { typeof(BusinessRuleException), HandleBusinessRuleException },
+            { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
             };
     }
 
@@ -48,6 +49,24 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         }
 
         HandleUnknownException(context);
+    }
+
+    private void HandleForbiddenAccessException(ExceptionContext context)
+    {
+        var details = new ProblemDetails
+        {
+            Status = StatusCodes.Status403Forbidden,
+            Title = "Forbidden",
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3",
+            Detail = "No tiene persmisos necesarios para realizar esta acción"
+        };
+
+        context.Result = new ObjectResult(details)
+        {
+            StatusCode = StatusCodes.Status403Forbidden
+        };
+
+        context.ExceptionHandled = true;
     }
 
     private void HandleValidationException(ExceptionContext context)

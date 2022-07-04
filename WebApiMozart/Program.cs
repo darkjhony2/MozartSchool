@@ -36,6 +36,9 @@ namespace WebApiMozart
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                     await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, roleManager);
+                    await ApplicationDbContextSeed.SeedRoles("Director", roleManager);
+                    await ApplicationDbContextSeed.SeedRoles("Docente", roleManager);
+                    await ApplicationDbContextSeed.SeedRoles("Coordinador", roleManager);
                     await ApplicationDbContextSeed.SeedSampleDataAsync(context);
                 }
                 catch (Exception ex)

@@ -26,6 +26,16 @@ public static class ApplicationDbContextSeed
         }
     }
 
+    public static async Task SeedRoles(string role, RoleManager<IdentityRole> roleManager)
+    {
+        var customRole = new IdentityRole(role);
+
+        if (roleManager.Roles.All(r => r.Name != customRole.Name))
+        {
+            await roleManager.CreateAsync(customRole);
+        }
+    }
+
     public static async Task SeedSampleDataAsync(ApplicationDbContext context)
     {
 

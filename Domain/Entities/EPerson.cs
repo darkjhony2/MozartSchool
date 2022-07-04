@@ -16,5 +16,7 @@ public class EPerson : AuditableEntity<Guid>
 
     public virtual EGender Gender { get; set; }
 
+    public string? UserId { get; set; }
+
     public int GenderId { get; set; }
 }
