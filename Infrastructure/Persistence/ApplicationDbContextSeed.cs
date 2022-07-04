@@ -8,9 +8,13 @@ namespace ColegioMozart.Infrastructure.Persistence;
 
 public static class ApplicationDbContextSeed
 {
-    public static async Task SeedDefaultUserAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public static async Task SeedDefaultUserAsync(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
     {
-        var administratorRole = new IdentityRole("Administrator");
+        var administratorRole = new ApplicationRole()
+        {
+            Name = "Administrator",
+            Enabled = true
+        };
 
         if (roleManager.Roles.All(r => r.Name != administratorRole.Name))
         {
@@ -26,9 +30,13 @@ public static class ApplicationDbContextSeed
         }
     }
 
-    public static async Task SeedRoles(string role, RoleManager<IdentityRole> roleManager)
+    public static async Task SeedRoles(string role, RoleManager<ApplicationRole> roleManager)
     {
-        var customRole = new IdentityRole(role);
+        var customRole = new ApplicationRole()
+        {
+            Name = role,
+            Enabled = true
+        };
 
         if (roleManager.Roles.All(r => r.Name != customRole.Name))
         {

@@ -30,11 +30,11 @@ public static class DependencyInjection
 
         services
             .AddDefaultIdentity<ApplicationUser>()
-            .AddRoles<IdentityRole>()
+            .AddRoles<ApplicationRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        services.AddIdentityServer()
-            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+        //services.AddIdentityServer()
+         //   .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();

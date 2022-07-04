@@ -5,12 +5,13 @@ using ColegioMozart.Domain.Entities;
 using ColegioMozart.Infrastructure.Identity;
 using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace ColegioMozart.Infrastructure.Persistence;
 
-public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
+public class ApplicationDbContext :/*ApiAuthorizationDbContext<ApplicationUser>, */IdentityDbContext<ApplicationUser, ApplicationRole, string>, IApplicationDbContext
 {
     private readonly ICurrentUserService _currentUserService;
     private readonly IDateTime _dateTime;
@@ -21,7 +22,7 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         IOptions<OperationalStoreOptions> operationalStoreOptions,
         ICurrentUserService currentUserService,
         IDomainEventService domainEventService,
-        IDateTime dateTime) : base(options, operationalStoreOptions)
+        IDateTime dateTime) : base(options/*, operationalStoreOptions*/)
     {
         _currentUserService = currentUserService;
         _domainEventService = domainEventService;
