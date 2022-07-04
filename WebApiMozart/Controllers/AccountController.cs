@@ -1,4 +1,5 @@
-﻿using ColegioMozart.Application.Common.Interfaces;
+﻿using ColegioMozart.Application.Common.Exceptions;
+using ColegioMozart.Application.Common.Interfaces;
 using ColegioMozart.Domain.Entities;
 using ColegioMozart.Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication;
@@ -42,19 +43,27 @@ public class AccountController : RestApiControllerBase
     [HttpPost("Login")]
     public async Task<IActionResult> GenerateToken([FromBody] LoginModel model)
     {
-        //_accessTokenFormat.
-        var isValid = await _identityService.VerifyCredentialsAsync(model.username, model.password);
+        try
+        {
+            //_accessTokenFormat.
+            var isValid = await _identityService.VerifyCredentialsAsync(model.username, model.password);
 
-        if (!isValid.Item1)
+            if (!isValid.Item1)
+            {
+                return Unauthorized();
+            }
+
+
+            var userRoles = await _identityService.GetUserRoles(isValid.Item2);
+
+            AuthenticatedUserResponse response = await _authenticator.Authenticate(isValid.Item2, model.username, String.Join("", userRoles));
+
+            return Ok(response);
+        }
+        catch (NotFoundException)
         {
             return Unauthorized();
         }
-
-        var userRoles = await _identityService.GetUserRoles(isValid.Item2);
-
-        AuthenticatedUserResponse response = await _authenticator.Authenticate(isValid.Item2, model.username, String.Join("", userRoles));
-
-        return Ok(response);
     }
 
     public record LoginModel(string username, string password);

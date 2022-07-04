@@ -78,6 +78,26 @@ public class RegisterAttendanceRecordForClassroomCommandHandler : IRequestHandle
             throw new BusinessRuleException(sb.ToString());
         }
 
+        var alreadyRegisterInfo = await _context
+            .AttendanceRecords
+            .AsNoTracking()
+            .Where(x => x.Date == DateOnly.FromDateTime(request.Date) && studentIsFromClassroom.Contains(x.StudentId))
+            .ProjectTo<AttendanceRecordDTO>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        if (alreadyRegisterInfo != null && alreadyRegisterInfo.Count > 0)
+        {
+            var studentsRegister = alreadyRegisterInfo.Select(x =>
+                x.Student.Name + " " + x.Student.LastName + " " + x.Student.MothersLastName + " - " +
+                x.AttendanceStatus.Name
+                );
+
+            
+            throw new BusinessRuleException(
+                "No se puede volver a tomar la asistencia. Ya existe un registro de asistencia para este salón." + Environment.NewLine + 
+                String.Join(Environment.NewLine + "-", studentsRegister));
+        }
+
         var attendaceRecords = request.StudentsAttendance
             .Select(x =>
             {
