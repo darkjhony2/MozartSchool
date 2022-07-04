@@ -30,4 +30,17 @@ public class EvaluationController : RestApiControllerBase
         return Ok(dto);
     }
 
+
+    /// <summary>
+    /// Registra las notas para una evaluacion
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("{EvaluationId}/Scores")]
+    public async Task<IActionResult> RegisterScore([FromRoute] Guid EvaluationId, [FromBody] List<AddEvaluationScoreResource> dto)
+    {
+        await Mediator.Send(new AddEvaluationScoreCommand() { Scores = dto, EvaluationId = EvaluationId });
+        return Ok(dto);
+    }
+
+
 }
