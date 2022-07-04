@@ -20,7 +20,7 @@ public class Authenticator
         // _refreshTokenRepository = refreshTokenRepository;
     }
 
-    public async Task<AuthenticatedUserResponse> Authenticate(string id, string user)
+    public async Task<AuthenticatedUserResponse> Authenticate(string id, string user, string role)
     {
         AccessToken accessToken = _accessTokenGenerator.GenerateToken(id, user);
         /* string refreshToken = _refreshTokenGenerator.GenerateToken();
@@ -36,6 +36,7 @@ public class Authenticator
         {
             AccessToken = accessToken.Value,
             AccessTokenExpirationTime = accessToken.ExpirationTime,
+            Role = role
             //RefreshToken = refreshToken
         };
     }

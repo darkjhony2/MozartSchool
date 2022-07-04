@@ -10,9 +10,11 @@ public interface IIdentityService
 
     Task<bool> AuthorizeAsync(string userId, string policyName);
 
-    Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password);
+    Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password, string role);
 
     Task<Result> DeleteUserAsync(string userId);
+
+    Task<IList<string>> GetUserRoles(string userId);
 
     Task<(bool, string)> VerifyCredentialsAsync(string userName, string password);
 }

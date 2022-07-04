@@ -50,8 +50,9 @@ public class AccountController : RestApiControllerBase
             return Unauthorized();
         }
 
+        var userRoles = await _identityService.GetUserRoles(isValid.Item2);
 
-        AuthenticatedUserResponse response = await _authenticator.Authenticate(isValid.Item2, model.username);
+        AuthenticatedUserResponse response = await _authenticator.Authenticate(isValid.Item2, model.username, String.Join("", userRoles));
 
         return Ok(response);
     }

@@ -74,7 +74,7 @@ public class CreateTeacherCommandHandler : IRequestHandler<CreateTeacherCommand>
 
         var teacher = _mapper.Map<ETeacher>(request);
 
-        var userData = await _identityService.CreateUserAsync(request.DocumentNumber, $"{request.DocumentNumber}@Moz!");
+        var userData = await _identityService.CreateUserAsync(request.DocumentNumber, $"{request.DocumentNumber}@Moz!", "Docente");
 
         if (userData.Result.Succeeded)
         {

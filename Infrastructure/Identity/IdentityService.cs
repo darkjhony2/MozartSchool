@@ -31,7 +31,7 @@ public class IdentityService : IIdentityService
         return user.UserName;
     }
 
-    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
+    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password, string role)
     {
         var user = new ApplicationUser
         {
@@ -41,6 +41,11 @@ public class IdentityService : IIdentityService
 
         var result = await _userManager.CreateAsync(user, password);
 
+        if (result.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(user, role);
+        }
+
         return (result.ToApplicationResult(), user.Id);
     }
 
@@ -49,6 +54,13 @@ public class IdentityService : IIdentityService
         var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 
         return user != null && await _userManager.IsInRoleAsync(user, role);
+    }
+
+    public async Task<IList<string>> GetUserRoles(string userId)
+    {
+        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+
+        return await _userManager.GetRolesAsync(user);
     }
 
     public async Task<bool> AuthorizeAsync(string userId, string policyName)
