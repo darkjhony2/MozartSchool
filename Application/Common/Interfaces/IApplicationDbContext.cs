@@ -26,7 +26,6 @@ public interface IApplicationDbContext
     DbSet<EEntity> Entities { get; }
     DbSet<EView> Views { get; }
 
-
     DbSet<EEvaluationType> EvaluationTypes { get; }
     DbSet<EEvaluation> Evaluations { get; }
     DbSet<EEvaluationScore> EvaluationScores { get; }
