@@ -20,6 +20,17 @@ public class EvaluationController : RestApiControllerBase
     }
 
     /// <summary>
+    /// Obtiene el detalle de una evaluacion con sus notas
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("{EvaluationId}/Scores")]
+    public async Task<IActionResult> GetScores([FromRoute] Guid EvaluationId)
+    {
+        var response = await Mediator.Send(new GetEvaluationDetailyByTeacherQuery() { Id = EvaluationId });
+        return Ok(response);
+    }
+
+    /// <summary>
     /// Registra una evaluacion para el salon
     /// </summary>
     /// <returns></returns>
@@ -42,5 +53,7 @@ public class EvaluationController : RestApiControllerBase
         return Ok(dto);
     }
 
+
+    
 
 }

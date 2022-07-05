@@ -1,4 +1,5 @@
-﻿using ColegioMozart.Application.Evaluations.Dtos;
+﻿using ColegioMozart.Application.Common.Security;
+using ColegioMozart.Application.Evaluations.Dtos;
 
 namespace ColegioMozart.Application.Evaluations.Queries;
 
