@@ -9,6 +9,7 @@ namespace ColegioMozart.Application.Evaluations.Dtos;
 
 public class EvaluationResource : IMapFrom<EEvaluation>
 {
+    public Guid Id { get; set; }
 
     public EvaluationTypeDTO EvaluationType { get; set; }
 
@@ -29,6 +30,7 @@ public class EvaluationResource : IMapFrom<EEvaluation>
     public void Mapping(Profile profile)
     {
         profile.CreateMap<EEvaluation, EvaluationResource>()
+            .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
             .ForMember(d => d.EvaluationType, opt => opt.MapFrom(s => s.EvaluationType))
             .ForMember(d => d.EvaluationName, opt => opt.MapFrom(s => s.EvaluationName))
             .ForMember(d => d.Subject, opt => opt.MapFrom(s => s.Subject))
