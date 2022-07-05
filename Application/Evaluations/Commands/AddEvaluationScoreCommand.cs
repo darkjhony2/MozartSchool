@@ -58,6 +58,7 @@ public class AddEvaluationScoreCommandHandler : IRequestHandler<AddEvaluationSco
         var requestUserIds = request.Scores.Select(x => x.StudentId);
 
         CheckStudents(students, requestUserIds);
+        await CheckAlreadyEvaluationTaken(students, evaluation);
         CheckMaxScore(request.Scores.Select(x => x.Score), evaluation.MaximumScore);
 
         var entityScores = request.Scores.Select(x =>
@@ -78,6 +79,25 @@ public class AddEvaluationScoreCommandHandler : IRequestHandler<AddEvaluationSco
         _logger.LogInformation("Se registraron correctamente las notas para la evaluacion {0}", request.EvaluationId);
 
         return Unit.Value;
+    }
+
+    private async Task CheckAlreadyEvaluationTaken(StudentClassroomDTO students, EEvaluation evaluation)
+    {
+        var evaluationScores = await _context
+           .EvaluationScores
+           .AsNoTracking()
+           .Where(x => x.EvaluationId == evaluation.Id && students.Students.Select(s=> s.Id).Contains(x.StudentId))
+           .ProjectTo<EvaluationScoreMinifiedDTO>(_mapper.ConfigurationProvider)
+           .ToListAsync();
+
+        if (evaluationScores != null && evaluationScores.Count > 0)
+        {
+            var evaluationsInfo = evaluationScores.Select(x => x.Student.Name + " " + x.Student.LastName + " " + x.Student.MothersLastName + " - " + x.Score);
+
+            throw new BusinessRuleException(
+              "No se puede volver a registrar las notas. Las notas registradas son:" + Environment.NewLine +
+              string.Join(Environment.NewLine + "-", evaluationsInfo));
+        }
     }
 
     private void CheckMaxScore(IEnumerable<decimal> evaluationScores, decimal maximumScore)

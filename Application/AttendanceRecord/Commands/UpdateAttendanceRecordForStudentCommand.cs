@@ -45,6 +45,7 @@ public class UpdateAttendanceRecordForStudentCommandHandler : IRequestHandler<Up
         var attendanceStatus = await _mediator.Send(new GetAttendanceStatusByIdQuery { Id = request.Resource.AttendanceStatusId });
 
         var attendanceRecordForStudent = await _context.AttendanceRecords
+            .AsNoTracking()
             .Where(x => x.Date == DateOnly.FromDateTime(request.Date) && x.StudentId == request.Resource.StudentId)
             .FirstOrDefaultAsync();
 
